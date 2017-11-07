@@ -1,22 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   nm_otool.h                                         :+:      :+:    :+:   */
+/*   arg.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/07 14:54:12 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/07 17:20:10 by fkoehler         ###   ########.fr       */
+/*   Created: 2017/11/07 16:56:50 by fkoehler          #+#    #+#             */
+/*   Updated: 2017/11/07 18:13:00 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef NM_OTOOL_H
-# define NM_OTOOL_H
+#include "nm_otool.h"
+#include <fcntl.h>
+#include <sys/stat.h>
 
-#include "../libft/includes/libft.h"
-#include "../libft/includes/ft_printf.h"
-#include <sys/mman.h>
+int		parse_arg(char *arg)
+{
+	int			fd;
+	struct stat	buf;
 
-int		parse_arg(char *arg);
-
-#endif
+	if ((fd = open(arg, O_RDONLY)) == -1)
+	{
+		// error funct
+		return (1);
+	}
+	if (fstat(fd, &buf) == -1)
+	{
+		// error funct
+		return (-1);
+	}
+	return (0);
+}

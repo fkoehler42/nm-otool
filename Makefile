@@ -6,13 +6,14 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/07 14:45:26 by fkoehler          #+#    #+#              #
-#    Updated: 2017/11/07 14:50:47 by fkoehler         ###   ########.fr        #
+#    Updated: 2017/11/07 17:03:08 by fkoehler         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 # FILES
-SRC = nm.c
+SRC = arg.c \
+	  nm.c
 
 NM = ft_nm
 OTOOL = ft_otool
