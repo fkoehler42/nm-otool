@@ -7,6 +7,8 @@
 
 # Executables
 *.out
+ft_nm
+ft_otool
 
 # Debug files
 *.dSYM/
