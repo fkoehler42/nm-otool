@@ -6,14 +6,17 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/07 14:45:26 by fkoehler          #+#    #+#              #
-#    Updated: 2017/11/07 17:03:08 by fkoehler         ###   ########.fr        #
+#    Updated: 2017/11/08 18:01:03 by fkoehler         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 # FILES
-SRC = arg.c \
-	  nm.c
+SRC = arch_64.c \
+	  arg.c \
+	  error.c \
+	  nm.c \
+	  sorting.c
 
 NM = ft_nm
 OTOOL = ft_otool
@@ -21,7 +24,7 @@ OBJS = $(SRC:.c=.o)
 O2 = $(addprefix $(OPATH), $(OBJS))
 
 # DIRECTORIES
-vpath %.c src
+vpath %.c src src/nm
 LIBPATH = libft/
 OPATH = obj/
 INC = includes/

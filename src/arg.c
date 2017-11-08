@@ -6,28 +6,32 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/07 16:56:50 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/07 18:13:00 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/08 19:24:48 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "nm_otool.h"
-#include <fcntl.h>
-#include <sys/stat.h>
 
-int		parse_arg(char *arg)
+int		open_file(t_executable exec, char *file)
 {
 	int			fd;
+	void		*ptr;
 	struct stat	buf;
 
-	if ((fd = open(arg, O_RDONLY)) == -1)
-	{
-		// error funct
-		return (1);
-	}
+	if ((fd = open(file, O_RDONLY)) == -1)
+		return (put_error(OPEN, exec, file));
 	if (fstat(fd, &buf) == -1)
-	{
-		// error funct
-		return (-1);
-	}
+		return (put_error(FSTAT, exec, file));
+	if (S_ISDIR(buf.st_mode))
+		return (put_error(DIRECTORY, exec, file));
+	if ((ptr = mmap(0, buf.st_size, PROT_READ | PROT_WRITE, MAP_PRIVATE, fd, 0))
+	== MAP_FAILED)
+		return (put_error(MAPPING, exec, file));
+	if (exec == EXEC_NM)
+		ft_nm(ptr);
+	/* else if (exec == EXEC_OTOOL) */
+		/* ft_otool(ptr); */
+	if (munmap(ptr, buf.st_size) == -1)
+		return (put_error(UNMAPPING, exec, file));
 	return (0);
 }

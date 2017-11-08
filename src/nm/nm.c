@@ -6,11 +6,24 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/07 15:03:48 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/07 17:18:25 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/08 18:51:13 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "nm_otool.h"
+
+int		ft_nm(void *file_ptr)
+{
+	uint32_t magic_nb;
+
+	magic_nb = *(uint32_t*)file_ptr;
+	if (magic_nb == MH_MAGIC)
+		return 0;
+		/* nm_handle_32(file_ptr); */
+	else if (magic_nb == MH_MAGIC_64)
+		nm_handle_64(file_ptr);
+	return (0);
+}
 
 int		main(int ac, char **av)
 {
@@ -20,12 +33,12 @@ int		main(int ac, char **av)
 	i = 0;
 	ret = EXIT_SUCCESS;
 	if (ac == 1)
-		ret = parse_arg("a.out");
+		ret = open_file(EXEC_NM, "a.out");
 	else
 	{
 		while (++i < ac)
 		{
-			if (parse_arg(av[i]) == 1)
+			if (open_file(EXEC_NM, av[i]) == 1)
 				ret = EXIT_FAILURE;
 		}
 	}
