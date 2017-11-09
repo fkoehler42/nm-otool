@@ -6,15 +6,15 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/07 14:45:26 by fkoehler          #+#    #+#              #
-#    Updated: 2017/11/08 18:01:03 by fkoehler         ###   ########.fr        #
+#    Updated: 2017/11/09 12:10:53 by fkoehler         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 # FILES
 SRC = arch_64.c \
-	  arg.c \
 	  error.c \
+	  file_handling.c \
 	  nm.c \
 	  sorting.c
 
@@ -24,7 +24,7 @@ OBJS = $(SRC:.c=.o)
 O2 = $(addprefix $(OPATH), $(OBJS))
 
 # DIRECTORIES
-vpath %.c src src/nm
+vpath %.c src/utils src/nm
 LIBPATH = libft/
 OPATH = obj/
 INC = includes/
