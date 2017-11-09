@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/08 11:13:33 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/09 12:50:18 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/09 14:09:14 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,5 @@ int		put_error(t_error_flag flag, t_executable exec, char *arg)
 		ft_putstr_fd(": Unable to map the file into memory.\n", 2);
 	else if (flag == UNMAPPING)
 		ft_putstr_fd(": Unable to release the file from memory.\n", 2);
-	return (1);
+	return (-1);
 }
