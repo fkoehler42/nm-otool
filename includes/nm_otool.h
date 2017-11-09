@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/07 14:54:12 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/08 19:07:59 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/09 14:01:55 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,17 @@ typedef enum		e_error_flag
 	OPEN,
 	FSTAT,
 	DIRECTORY,
+	MALLOC,
 	MAPPING,
 	UNMAPPING,
 	UNDEFINED
 }					t_error_flag;
+
+typedef struct		s_nm_otool
+{
+	uintmax_t		file_size;
+}					t_nm_otool;
+
 
 int					ft_nm(void *file_ptr);
 /* void				nm_handle_32(void *file_ptr); */
@@ -48,6 +55,9 @@ int					open_file(t_executable exec, char *file);
 
 void				standard_sort_64(void *stringtable, struct nlist_64 *array,
 					int nb_elem);
+
+int					init_env_struct(t_executable exec);
+t_nm_otool			*get_env_struct(t_nm_otool *env);
 
 int					put_error(t_error_flag flag, t_executable exec, char *arg);
 

@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/08 11:13:33 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/08 13:57:33 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/09 12:50:18 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,16 @@ int		put_error(t_error_flag flag, t_executable exec, char *arg)
 		ft_putstr_fd("ft_nm: ", 2);
 	else if (exec == EXEC_OTOOL)
 		ft_putstr_fd("ft_otool: ", 2);
-	ft_putstr_fd(arg, 2);
+	if (arg != NULL)
+		ft_putstr_fd(arg, 2);
 	if (flag == OPEN)
 		ft_putstr_fd(": No such file or directory.\n", 2);
 	else if (flag == FSTAT)
 		ft_putstr_fd(": Permission denied.\n", 2);
 	else if (flag == DIRECTORY)
 		ft_putstr_fd(": Is a directory.\n", 2);
+	else if (flag == MALLOC)
+		ft_putstr_fd(": Memory allocation error\n", 2);
 	else if (flag == MAPPING)
 		ft_putstr_fd(": Unable to map the file into memory.\n", 2);
 	else if (flag == UNMAPPING)

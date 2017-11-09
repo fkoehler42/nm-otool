@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/07 15:03:48 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/08 18:51:13 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/09 14:03:00 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ int		main(int ac, char **av)
 
 	i = 0;
 	ret = EXIT_SUCCESS;
+	if (init_env_struct(EXEC_NM) == 1)
+		return (EXIT_FAILURE);
 	if (ac == 1)
 		ret = open_file(EXEC_NM, "a.out");
 	else
