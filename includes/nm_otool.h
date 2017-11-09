@@ -6,17 +6,16 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/07 14:54:12 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/09 14:01:55 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/09 14:57:33 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef NM_OTOOL_H
 # define NM_OTOOL_H
 
-# define debug ft_printf("%s, %s\n", __FILE__, __LINE__);
+# define debug ft_putstr(__FILE__);ft_putstr(" --> line ");ft_putnbr(__LINE__);ft_putchar('\n');
 
 #include "../libft/includes/libft.h"
-#include "../libft/includes/ft_printf.h"
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <sys/mman.h>
@@ -53,7 +52,7 @@ void				nm_handle_64(void *file_ptr);
 
 int					open_file(t_executable exec, char *file);
 
-void				standard_sort_64(void *stringtable, struct nlist_64 *array,
+void				ascii_sort_64(void *stringtable, struct nlist_64 *array,
 					int nb_elem);
 
 int					init_env_struct(t_executable exec);

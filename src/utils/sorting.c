@@ -6,13 +6,13 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/08 18:00:33 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/08 19:33:19 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/09 14:57:47 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "nm_otool.h"
 
-void	standard_sort_64(void *stringtable, struct nlist_64 *array, int nb_elem)
+void	ascii_sort_64(void *stringtable, struct nlist_64 *array, int nb_elem)
 {
 	int				i;
 	int				j;

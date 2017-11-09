@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/08 14:15:30 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/08 19:26:06 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/09 14:58:15 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,14 @@ static void	nm_output_64(void *file_ptr, struct symtab_command *symtab_command)
 	nsyms = (int)symtab_command->nsyms;
 	stringtable = file_ptr + symtab_command->stroff;
 	symtable = file_ptr + symtab_command->symoff;
-	standard_sort_64(stringtable, symtable, nsyms);
+	debug
+	ascii_sort_64(stringtable, symtable, nsyms);
+	debug
 	while (i < nsyms)
 	{
+		debug
 		ft_putendl(stringtable + symtable[i].n_un.n_strx);
+		debug
 		i++;
 	}
 }
