@@ -6,16 +6,17 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/07 14:54:12 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/09 14:57:33 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/09 16:37:56 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef NM_OTOOL_H
 # define NM_OTOOL_H
 
-# define debug ft_putstr(__FILE__);ft_putstr(" --> line ");ft_putnbr(__LINE__);ft_putchar('\n');
+# define debug ft_printf("%s, %d\n", __FILE__, __LINE__);
 
 #include "../libft/includes/libft.h"
+#include "../libft/includes/ft_printf.h"
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <sys/mman.h>
@@ -31,32 +32,35 @@ typedef enum		e_executable
 
 typedef enum		e_error_flag
 {
-	OPEN,
-	FSTAT,
 	DIRECTORY,
-	MALLOC,
+	FSTAT,
+	MALFORMED,
 	MAPPING,
+	OPEN,
 	UNMAPPING,
 	UNDEFINED
 }					t_error_flag;
 
 typedef struct		s_nm_otool
 {
-	uintmax_t		file_size;
+	t_executable	exec;
+	char			*file_name;
+	void			*file_start;
+	void			*file_end;
 }					t_nm_otool;
 
 
-int					ft_nm(void *file_ptr);
+int					ft_nm(t_nm_otool *env);
 /* void				nm_handle_32(void *file_ptr); */
-void				nm_handle_64(void *file_ptr);
+int					nm_handle_64(t_nm_otool *env);
 
-int					open_file(t_executable exec, char *file);
+int					open_file(t_nm_otool *env);
 
 void				ascii_sort_64(void *stringtable, struct nlist_64 *array,
 					int nb_elem);
 
-int					init_env_struct(t_executable exec);
-t_nm_otool			*get_env_struct(t_nm_otool *env);
+void				init_env_struct(t_nm_otool *env);
+/* t_nm_otool			*get_env_struct(t_nm_otool *env); */
 
 int					put_error(t_error_flag flag, t_executable exec, char *arg);
 
