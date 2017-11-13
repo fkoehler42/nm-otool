@@ -6,78 +6,123 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/08 14:15:30 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/09 19:26:35 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/13 18:14:01 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "nm_otool.h"
-/* WIP
-static int	nm_syms_type(t_nm_otool *env)
-{
-	struct segment_command	*sc;
+#include "nm.h"
 
-	sc = env->file_start +
-	sizeof(struct mach_header_64) + sizeof(struct load_command);
-	if ((void*)sc > env->file_end)
-		return (put_error(MALFORMED, env->exec, env->file_name));
-	ft_put_uintmax(sc->nsects, 10);
-	return (0);
-}
-WIP */
-static int	nm_syms_infos_64(t_nm_otool *env,
-struct symtab_command *symtab_command)
+static int	get_sym_type_location_64(uint32_t nsects, struct section_64 *sec_64,
+t_sec_location *sections, void *file_end)
 {
-	int				i;
-	int				nsyms;
-	void			*stringtable;
-	struct nlist_64	*symtable;
+	uint32_t		i;
 
 	i = 0;
-	nsyms = (int)symtab_command->nsyms;
-	stringtable = env->file_start + symtab_command->stroff;
-	symtable = env->file_start + symtab_command->symoff;
-	if (stringtable > env->file_end || (void*)symtable > env->file_end)
-		return (put_error(MALFORMED, env->exec, env->file_name));
-	ascii_sort_64(stringtable, symtable, nsyms);
-	nm_syms_type(env);
-	while (i < nsyms)
+	while (i < nsects)
 	{
-		if (!symtable[i].n_value)
-		{
-			ft_printf("%16c %s\n", ' ',
-			(char*)stringtable + symtable[i].n_un.n_strx);
-		}
-		else
-		{
-			ft_printf("%016llx %s\n", symtable[i].n_value,
-			(char*)stringtable + symtable[i].n_un.n_strx);
-		}
+		if ((void*)sec_64 > file_end)
+			return (-1);
+		if (ft_strcmp(sec_64->sectname, SECT_TEXT) == 0 &&
+		ft_strcmp(sec_64->segname, SEG_TEXT) == 0)
+			sections->text = sections->sec_index;
+		else if (ft_strcmp(sec_64->sectname, SECT_DATA) == 0 &&
+		ft_strcmp(sec_64->segname, SEG_DATA) == 0)
+			sections->data = sections->sec_index;
+		else if (ft_strcmp(sec_64->sectname, SECT_BSS) == 0 &&
+		ft_strcmp(sec_64->segname, SEG_DATA) == 0)
+			sections->bss = sections->sec_index;
+		sec_64 = (void *)sec_64 + sizeof(*sec_64);
+		sections->sec_index++;
 		i++;
 	}
 	return (0);
 }
 
-int			nm_handle_64(t_nm_otool *env)
+static int	find_sections_64(uint32_t ncmds, struct load_command *lc,
+t_sec_location *sections, void *file_end)
 {
-	int						i;
-	int						ncmds;
+	uint32_t					i;
+	struct segment_command_64	*sg;
+	struct section_64			*sec_64;
+
+	i = 0;
+	while (i < ncmds)
+	{
+		if ((void*)lc > file_end)
+			return (-1);
+		if (lc->cmd == LC_SEGMENT_64)
+		{
+			sg = (struct segment_command_64*)lc;
+			sec_64 = (struct section_64*)((void*)sg + sizeof(*sg));
+			if (get_sym_type_location_64(sg->nsects, sec_64, sections,
+			file_end) == -1)
+				return (-1);
+		}
+		lc = (void*)lc + lc->cmdsize;
+		i++;
+	}
+	return (0);
+}
+/*
+static int	symtab_64(t_nm *env, int nsyms, void *stringtable,
+		struct nlist_64 *symtable)
+{
+	int			i;
+
+	i = 0;
+	if (!(env->symt_array = create_symt_array(nsyms, env->exec)))
+		return (-1);
+	while (env->symt_array[i])
+	{
+		if (symtable[i].n_value)
+			env->symt_array[i]->value = (uintmax_t)symtable[i].n_value;
+		env->symt_array[i]->str = (char*)stringtable;
+		i++;
+	}
+	return (0);
+}
+*/
+static int	symtab_infos_64(t_nm *env, uint32_t ncmds,
+		struct symtab_command *symtab_command, struct load_command *lc_start)
+{
+	/* uint32_t		nsyms; */
+	void			*stringtable;
+	struct nlist_64	*symtable;
+	t_sec_location	sections;
+
+	/* nsyms = (int)symtab_command->nsyms; */
+	stringtable = env->file_start + symtab_command->stroff;
+	symtable = env->file_start + symtab_command->symoff;
+	init_sections_struct(&sections);
+	if (stringtable > env->file_end || (void*)symtable > env->file_end)
+		return (put_error(MALFORMED, env->exec, env->file_name));
+	if ((find_sections_64(ncmds, lc_start, &sections, env->file_end)) == -1)
+		return (put_error(MALFORMED, env->exec, env->file_name));
+	return (0);
+}
+
+int			handle_64(t_nm *env)
+{
+	uint32_t				i;
 	struct mach_header_64	*header;
+	struct load_command		*lc_start;
 	struct load_command		*lc;
 
 	i = 0;
 	header = (struct mach_header_64*)env->file_start;
-	ncmds = header->ncmds;
-	lc = env->file_start + sizeof(*header);
-	while (i < ncmds)
+	lc_start = (struct load_command*)(env->file_start + sizeof(*header));
+	lc = lc_start;
+	while (i < header->ncmds)
 	{
 		if ((void*)lc > env->file_end)
 			return (put_error(MALFORMED, env->exec, env->file_name));
 		if (lc->cmd == LC_SYMTAB)
 		{
-			nm_syms_infos_64(env, (struct symtab_command*)lc);
+			if (symtab_infos_64(env, header->ncmds,
+			(struct symtab_command*)lc, lc_start) == -1)
+				return (-1);
 			break;
 		}
-		i++;
 		lc = (void*)lc + lc->cmdsize;
 	}
 	return (0);

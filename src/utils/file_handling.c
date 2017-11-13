@@ -6,13 +6,13 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/09 12:09:14 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/09 16:43:01 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/13 13:09:39 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "nm_otool.h"
+#include "nm.h"
 
-int		open_file(t_nm_otool *env)
+int		open_file(t_nm *env)
 {
 	int			fd;
 	struct stat	buf;
@@ -23,7 +23,7 @@ int		open_file(t_nm_otool *env)
 		return (put_error(FSTAT, env->exec, env->file_name));
 	if (S_ISDIR(buf.st_mode))
 		return (put_error(DIRECTORY, env->exec, env->file_name));
-	if ((env->file_start = mmap(0, buf.st_size, PROT_READ | PROT_WRITE,
+	if ((env->file_start = mmap(0, buf.st_size, PROT_READ,
 	MAP_PRIVATE, fd, 0)) == MAP_FAILED)
 		return (put_error(MAPPING, env->exec, env->file_name));
 	env->file_end = env->file_start + buf.st_size - 1;

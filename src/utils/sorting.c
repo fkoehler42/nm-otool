@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "nm_otool.h"
+#include "nm.h"
 
 void	ascii_sort_64(void *stringtable, struct nlist_64 *array, int nb_elem)
 {

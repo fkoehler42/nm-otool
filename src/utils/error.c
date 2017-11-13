@@ -6,11 +6,11 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/08 11:13:33 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/09 16:50:18 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/13 12:22:45 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "nm_otool.h"
+#include "nm.h"
 
 int		put_error(t_error_flag flag, t_executable exec, char *arg)
 {
@@ -28,6 +28,8 @@ int		put_error(t_error_flag flag, t_executable exec, char *arg)
 		ft_putstr_fd(": Is a directory.\n", 2);
 	else if (flag == MALFORMED)
 		ft_putstr_fd(": The file is malformed.\n", 2);
+	else if (flag == MALLOC)
+		ft_putstr_fd(": Memory allocation error.\n", 2);
 	else if (flag == MAPPING)
 		ft_putstr_fd(": Unable to map the file into memory.\n", 2);
 	else if (flag == UNMAPPING)

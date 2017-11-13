@@ -6,13 +6,13 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/07 14:45:26 by fkoehler          #+#    #+#              #
-#    Updated: 2017/11/09 12:42:59 by fkoehler         ###   ########.fr        #
+#    Updated: 2017/11/13 14:49:14 by fkoehler         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 # FILES
-SRC = arch_64.c \
+NM_SRC = arch_64.c \
 	  error.c \
 	  file_handling.c \
 	  nm.c \
@@ -21,13 +21,13 @@ SRC = arch_64.c \
 
 NM = ft_nm
 OTOOL = ft_otool
-OBJS = $(SRC:.c=.o)
-O2 = $(addprefix $(OPATH), $(OBJS))
+NM_OBJS = $(NM_SRC:.c=.o)
+NM_O2 = $(addprefix $(NM_OPATH), $(NM_OBJS))
 
 # DIRECTORIES
 vpath %.c src/utils src/nm
 LIBPATH = libft/
-OPATH = obj/
+NM_OPATH = obj/nm/
 INC = includes/
 LIBINC = $(LIBPATH)$(INC)
 LIB	= $(LIBPATH)libft.a
@@ -39,23 +39,23 @@ FLAGS = -Wall -Werror -Wextra
 # PROCESS
 all: $(NM)
 
-$(NM): $(LIB) $(O2)
-	@$(CC) $(FLAGS) $(O2) -L $(LIBPATH) -lft -I $(LIBINC) -I $(INC) -o $@
+$(NM): $(LIB) $(NM_O2)
+	@$(CC) $(FLAGS) $(NM_O2) -L $(LIBPATH) -lft -I $(LIBINC) -I $(INC) -o $@
 	@echo "\033[0;34m$(NM) compilation done !\033[0;m"
 
 $(LIB):
 	@echo "\033[0;34mPlease wait while libft is compiled...\033[0;m"
 	@make -C $(LIBPATH)
 
-$(OPATH)%.o: %.c
+$(NM_OPATH)%.o: %.c
 	@$(CC) $(FLAGS) -I $(INC) -I $(LIBINC) -c $< -o $@
 
 clean:
-	@rm -f $(O2)
+	@rm -f $(NM_O2)
 	@echo "\033[0;34mNm-otool object files deleted !\033[0;m"
 
 fclean: clean
-	@rm -f $(NAME) $(SYMLINK)
+	@rm -f $(NAME)
 	@echo "\033[0;34m$(NM) and $(OTOOL) executables deleted !\033[0;m"
 	-@make fclean -C $(LIBPATH)
 
