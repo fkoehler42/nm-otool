@@ -6,17 +6,19 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/07 14:45:26 by fkoehler          #+#    #+#              #
-#    Updated: 2017/11/13 14:49:14 by fkoehler         ###   ########.fr        #
+#    Updated: 2017/11/13 19:59:49 by fkoehler         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 # FILES
 NM_SRC = arch_64.c \
+	  display.c \
 	  error.c \
 	  file_handling.c \
 	  nm.c \
 	  sorting.c \
+	  sym_type.c \
 	  structure.c
 
 NM = ft_nm

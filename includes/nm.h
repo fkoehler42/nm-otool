@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/07 14:54:12 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/13 18:11:20 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/13 19:55:28 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,18 @@ int					handle_64(t_nm *env);
 
 int					open_file(t_nm *env);
 
-void				ascii_sort_64(void *stringtable, struct nlist_64 *array,
+char				get_sym_type(uint8_t type, uint8_t nsec, uint64_t value,
+					t_sec_location *sections);
+void				ascii_sort_64(struct nlist_64 *array, void *stringtable,
 					int nb_elem);
 
 void				init_env_struct(t_nm *env);
 void				init_sections_struct(t_sec_location *sections);
 /* t_symtab			**create_symt_array(int nsyms, t_executable exec); */
 /* t_nm			*get_env_struct(t_nm *env); */
+
+void				print_64(struct nlist_64 *symtab, void *stringtab,
+					t_sec_location *sections, uint32_t nsyms);
 
 int					put_error(t_error_flag flag, t_executable exec, char *arg);
 

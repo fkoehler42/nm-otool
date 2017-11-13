@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/09 12:09:14 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/13 13:09:39 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/13 20:01:03 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int		open_file(t_nm *env)
 		return (put_error(FSTAT, env->exec, env->file_name));
 	if (S_ISDIR(buf.st_mode))
 		return (put_error(DIRECTORY, env->exec, env->file_name));
-	if ((env->file_start = mmap(0, buf.st_size, PROT_READ,
+	if ((env->file_start = mmap(0, buf.st_size, PROT_READ | PROT_WRITE,
 	MAP_PRIVATE, fd, 0)) == MAP_FAILED)
 		return (put_error(MAPPING, env->exec, env->file_name));
 	env->file_end = env->file_start + buf.st_size - 1;

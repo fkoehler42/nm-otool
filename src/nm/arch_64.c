@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/08 14:15:30 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/13 18:14:01 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/13 19:32:19 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ static int	symtab_64(t_nm *env, int nsyms, void *stringtable,
 }
 */
 static int	symtab_infos_64(t_nm *env, uint32_t ncmds,
-		struct symtab_command *symtab_command, struct load_command *lc_start)
+struct symtab_command *symtab_command, struct load_command *lc_start)
 {
 	/* uint32_t		nsyms; */
 	void			*stringtable;
@@ -98,6 +98,7 @@ static int	symtab_infos_64(t_nm *env, uint32_t ncmds,
 		return (put_error(MALFORMED, env->exec, env->file_name));
 	if ((find_sections_64(ncmds, lc_start, &sections, env->file_end)) == -1)
 		return (put_error(MALFORMED, env->exec, env->file_name));
+	print_64(symtable, stringtable, &sections, symtab_command->nsyms);
 	return (0);
 }
 
