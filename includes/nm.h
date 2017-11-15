@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/07 14:54:12 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/15 16:22:24 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/15 17:49:42 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ typedef struct		s_nm
 
 
 int					ft_nm(t_nm *env);
-/* void				handle_32(void *file_ptr); */
 int					handle_32(t_nm *env);
 int					handle_64(t_nm *env);
 int					handle_fat(t_nm *env);
@@ -82,8 +81,6 @@ void				ascii_sort_64(struct nlist_64 *array, void *stringtable,
 void				init_env_struct(t_nm *env);
 void				copy_env_struct(t_nm *src, t_nm *dst);
 void				init_sections_struct(t_sec_location *sections);
-/* t_symtab			**create_symt_array(int nsyms, t_executable exec); */
-/* t_nm			*get_env_struct(t_nm *env); */
 
 void				print_32(struct nlist *symtab, void *stringtab,
 					t_sec_location *sections, uint32_t nsyms);
