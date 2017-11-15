@@ -6,13 +6,25 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/09 12:09:14 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/13 20:01:03 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/15 15:26:57 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "nm.h"
 
-int		open_file(t_nm *env)
+int			is_big_endian(uint32_t magic_nb)
+{
+	return (magic_nb == MH_CIGAM || magic_nb == MH_CIGAM_64
+	|| magic_nb == FAT_CIGAM);
+}
+
+uint32_t	swap_bytes_uint32(uint32_t value)
+{
+	return (((value & 0xFF) << 24) | (((value >> 8) & 0xFF) << 16) |
+	(((value >> 16) & 0xFF) << 8) | ((value >> 24) & 0xFF));
+}
+
+int			handle_file(t_nm *env)
 {
 	int			fd;
 	struct stat	buf;
@@ -33,5 +45,7 @@ int		open_file(t_nm *env)
 		/* ft_otool(ptr); */
 	if (munmap(env->file_start, buf.st_size) == -1)
 		return (put_error(UNMAPPING, env->exec, env->file_name));
+	if (close(fd) == -1)
+		return (put_error(UNDEFINED, env->exec, env->file_name)); // error to define
 	return (0);
 }

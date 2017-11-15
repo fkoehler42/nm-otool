@@ -6,7 +6,7 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/07 14:45:26 by fkoehler          #+#    #+#              #
-#    Updated: 2017/11/15 11:36:36 by fkoehler         ###   ########.fr        #
+#    Updated: 2017/11/15 16:52:35 by fkoehler         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@
 # FILES
 NM_SRC = arch_32.c \
 	  arch_64.c \
+	  arch_fat.c \
 	  display.c \
 	  error.c \
 	  file_handling.c \

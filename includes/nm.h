@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/07 14:54:12 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/15 12:01:51 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/15 16:22:24 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ typedef struct		s_nm
 	char			*file_name;
 	void			*file_start;
 	void			*file_end;
+	int				big_endian;
 }					t_nm;
 
 
@@ -64,8 +65,11 @@ int					ft_nm(t_nm *env);
 /* void				handle_32(void *file_ptr); */
 int					handle_32(t_nm *env);
 int					handle_64(t_nm *env);
+int					handle_fat(t_nm *env);
 
-int					open_file(t_nm *env);
+int					is_big_endian(uint32_t magic_nb);
+uint32_t			swap_bytes_uint32(uint32_t value);
+int					handle_file(t_nm *env);
 
 char				get_sym_type(uint8_t type, uint8_t nsec, uint64_t value,
 					t_sec_location *sections);
@@ -76,6 +80,7 @@ void				ascii_sort_64(struct nlist_64 *array, void *stringtable,
 					int nb_elem);
 
 void				init_env_struct(t_nm *env);
+void				copy_env_struct(t_nm *src, t_nm *dst);
 void				init_sections_struct(t_sec_location *sections);
 /* t_symtab			**create_symt_array(int nsyms, t_executable exec); */
 /* t_nm			*get_env_struct(t_nm *env); */
