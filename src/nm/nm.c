@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/07 15:03:48 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/15 16:14:44 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/15 18:22:01 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int		ft_nm(t_nm *env)
 		handle_64(env);
 	else if (magic_nb == FAT_MAGIC || magic_nb == FAT_CIGAM)
 		handle_fat(env);
+	else if (!(ft_strncmp((char*)env->file_start, ARMAG, (size_t)SARMAG)))
+		handle_lib(env);
 	return (0);
 }
 

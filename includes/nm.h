@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/07 14:54:12 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/15 17:49:42 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/15 18:21:57 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 #include <mach-o/loader.h>
 #include <mach-o/nlist.h>
 #include <mach-o/fat.h>
+#include <mach-o/ranlib.h>
+#include <ar.h>
 
 typedef enum		e_executable
 {
@@ -65,6 +67,7 @@ int					ft_nm(t_nm *env);
 int					handle_32(t_nm *env);
 int					handle_64(t_nm *env);
 int					handle_fat(t_nm *env);
+int					handle_lib(t_nm *env);
 
 int					is_big_endian(uint32_t magic_nb);
 uint32_t			swap_bytes_uint32(uint32_t value);
