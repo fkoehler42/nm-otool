@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/07 15:03:48 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/13 13:08:35 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/15 10:48:31 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@ int		ft_nm(t_nm *env)
 
 	magic_nb = *(uint32_t*)env->file_start;
 	if (magic_nb == MH_MAGIC)
-		return 0;
-		/* handle_32(file_ptr); */
+		handle_32(env);
 	else if (magic_nb == MH_MAGIC_64)
 		handle_64(env);
 	return (0);
