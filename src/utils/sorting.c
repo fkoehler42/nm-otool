@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/08 18:00:33 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/15 12:32:42 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/17 18:07:43 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,4 +116,28 @@ void	ascii_sort_64(struct nlist_64 *array, void *stringtable, int nb_elem)
 		i++;
 	}
 	ascii_sort_duplicates_64(array, stringtable, nb_elem);
+}
+
+void	asc_sort_offset_array(uint32_t *array, uint32_t array_len)
+{
+	uint32_t	i;
+	uint32_t	j;
+	uint32_t	tmp;
+
+	i = 0;
+	while (i < array_len - 1)
+	{
+		j = i + 1;
+		while (j < array_len)
+		{
+			if (array[i] > array[j])
+			{
+				tmp = array[i];
+				array[i] = array[j];
+				array[j] = tmp;
+			}
+			j++;
+		}
+		i++;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/07 14:54:12 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/15 18:21:57 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/17 18:38:19 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ void				ascii_sort_32(struct nlist *array, void *stringtable,
 					int nb_elem);
 void				ascii_sort_64(struct nlist_64 *array, void *stringtable,
 					int nb_elem);
+void				asc_sort_offset_array(uint32_t *array, uint32_t array_len);
 
 void				init_env_struct(t_nm *env);
 void				copy_env_struct(t_nm *src, t_nm *dst);

@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/13 19:10:45 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/17 15:40:01 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/17 17:41:47 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	print_sym_32(uint32_t value, char type, char *str)
 	if (!value && (type == 'u' || type == 'U'))
 		ft_printf("%8c %c %s\n", ' ', type, str);
 	else
-		ft_printf("%08llx %c %s\n", value, type, str);
+		ft_printf("%08x %c %s\n", value, type, str);
 }
 
 static void	print_sym_64(uint64_t value, char type, char *str)
@@ -25,7 +25,7 @@ static void	print_sym_64(uint64_t value, char type, char *str)
 	if (!value && (type == 'u' || type == 'U'))
 		ft_printf("%16c %c %s\n", ' ', type, str);
 	else
-		ft_printf("%016llx %c %s\n", value, type, str);
+		ft_printf("%016lx %c %s\n", value, type, str);
 }
 
 void		print_32(struct nlist *symtab, void *stringtab,
