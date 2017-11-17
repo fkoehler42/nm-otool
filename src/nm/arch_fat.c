@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/15 12:45:22 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/15 18:16:32 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/17 18:57:55 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,18 @@
 static int	parse_arch(t_nm *env, t_nm *env_cpy, struct fat_arch *arch)
 {
 	if (env->big_endian)
+	{
 		arch->offset = swap_bytes_uint32(arch->offset);
-	if (swap_bytes_uint32(arch->cputype) == CPU_TYPE_X86_64)
+		arch->cputype = swap_bytes_uint32(arch->cputype);
+	}
+	if (arch->cputype == CPU_TYPE_X86_64)
 	{
 		env_cpy->file_start = env->file_start + arch->offset;
 		return (ft_nm(env_cpy));
+	}
+	else if (arch->cputype == CPU_TYPE_POWERPC)
+	{
+		ft_putstr("I'm a PPC arch\n");
 	}
 	return (0);
 }
