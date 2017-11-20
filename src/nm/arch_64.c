@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/08 14:15:30 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/15 10:47:45 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/20 13:11:03 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,18 +93,19 @@ int			handle_64(t_nm *env)
 	header = (struct mach_header_64*)env->file_start;
 	lc_start = (struct load_command*)(env->file_start + sizeof(*header));
 	lc = lc_start;
+	header->ncmds = endianness(header->ncmds, env->big_endian);
 	while (i < header->ncmds)
 	{
 		if ((void*)lc > env->file_end)
 			return (put_error(MALFORMED, env->exec, env->file_name));
-		if (lc->cmd == LC_SYMTAB)
+		if (endianness(lc->cmd, env->big_endian) == LC_SYMTAB)
 		{
 			if (symtab_infos_64(env, header->ncmds,
 			(struct symtab_command*)lc, lc_start) == -1)
 				return (-1);
 			break;
 		}
-		lc = (void*)lc + lc->cmdsize;
+		lc = (void*)lc + endianness(lc->cmdsize, env->big_endian);
 	}
 	return (0);
 }

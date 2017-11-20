@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/15 10:46:47 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/15 11:01:59 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/20 13:17:51 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ t_sec_location *sections, void *file_end)
 	return (0);
 }
 
-static int	find_sections_32(uint32_t ncmds, struct load_command *lc,
-t_sec_location *sections, void *file_end)
+static int	find_sections_32(t_nm *env, uint32_t ncmds, struct load_command *lc,
+t_sec_location *sections)
 {
 	uint32_t				i;
 	struct segment_command	*sg;
@@ -48,17 +48,17 @@ t_sec_location *sections, void *file_end)
 	i = 0;
 	while (i < ncmds)
 	{
-		if ((void*)lc > file_end)
+		if ((void*)lc > env->file_end)
 			return (-1);
-		if (lc->cmd == LC_SEGMENT)
+		if (endianness(lc->cmd, env->big_endian) == LC_SEGMENT)
 		{
 			sg = (struct segment_command*)lc;
 			sec_32 = (struct section*)((void*)sg + sizeof(*sg));
-			if (get_sym_type_location_32(sg->nsects, sec_32, sections,
-			file_end) == -1)
+			if (get_sym_type_location_32(endianness(sg->nsects, env->big_endian),
+			sec_32, sections, env->file_end) == -1)
 				return (-1);
 		}
-		lc = (void*)lc + lc->cmdsize;
+		lc = (void*)lc + endianness(lc->cmdsize, env->big_endian);
 		i++;
 	}
 	return (0);
@@ -71,14 +71,17 @@ struct symtab_command *symtab_command, struct load_command *lc_start)
 	struct nlist	*symtable;
 	t_sec_location	sections;
 
-	stringtable = env->file_start + symtab_command->stroff;
-	symtable = env->file_start + symtab_command->symoff;
+	stringtable = env->file_start +
+	endianness(symtab_command->stroff, env->big_endian);
+	symtable = env->file_start +
+	endianness(symtab_command->symoff, env->big_endian);
 	init_sections_struct(&sections);
 	if (stringtable > env->file_end || (void*)symtable > env->file_end)
 		return (put_error(MALFORMED, env->exec, env->file_name));
-	if ((find_sections_32(ncmds, lc_start, &sections, env->file_end)) == -1)
+	if ((find_sections_32(env, ncmds, lc_start, &sections)) == -1)
 		return (put_error(MALFORMED, env->exec, env->file_name));
-	print_32(symtable, stringtable, &sections, symtab_command->nsyms);
+	print_32(symtable, stringtable, &sections,
+	endianness(symtab_command->nsyms, env->big_endian));
 	return (0);
 }
 
@@ -93,18 +96,19 @@ int			handle_32(t_nm *env)
 	header = (struct mach_header*)env->file_start;
 	lc_start = (struct load_command*)(env->file_start + sizeof(*header));
 	lc = lc_start;
+	header->ncmds = endianness(header->ncmds, env->big_endian);
 	while (i < header->ncmds)
 	{
 		if ((void*)lc > env->file_end)
 			return (put_error(MALFORMED, env->exec, env->file_name));
-		if (lc->cmd == LC_SYMTAB)
+		if (endianness(lc->cmd, env->big_endian) == LC_SYMTAB)
 		{
 			if (symtab_infos_32(env, header->ncmds,
 			(struct symtab_command*)lc, lc_start) == -1)
 				return (-1);
 			break;
 		}
-		lc = (void*)lc + lc->cmdsize;
+		lc = (void*)lc + endianness(lc->cmdsize, env->big_endian);
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/07 15:03:48 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/15 18:22:01 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/20 13:04:53 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ int		ft_nm(t_nm *env)
 
 	magic_nb = *(uint32_t*)env->file_start;
 	env->big_endian = is_big_endian(magic_nb);
-	if (magic_nb == MH_MAGIC)
+	if (magic_nb == MH_MAGIC || magic_nb == MH_CIGAM)
 		handle_32(env);
-	else if (magic_nb == MH_MAGIC_64)
+	else if (magic_nb == MH_MAGIC_64 || magic_nb == MH_CIGAM_64)
 		handle_64(env);
 	else if (magic_nb == FAT_MAGIC || magic_nb == FAT_CIGAM)
 		handle_fat(env);

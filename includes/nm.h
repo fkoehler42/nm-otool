@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/07 14:54:12 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/17 18:38:19 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/20 13:03:52 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 #include <mach-o/nlist.h>
 #include <mach-o/fat.h>
 #include <mach-o/ranlib.h>
+#include <mach/machine.h>
 #include <ar.h>
 
 typedef enum		e_executable
@@ -70,7 +71,7 @@ int					handle_fat(t_nm *env);
 int					handle_lib(t_nm *env);
 
 int					is_big_endian(uint32_t magic_nb);
-uint32_t			swap_bytes_uint32(uint32_t value);
+uint32_t			endianness(uint32_t value, int is_big_endian);
 int					handle_file(t_nm *env);
 
 char				get_sym_type(uint8_t type, uint8_t nsec, uint64_t value,

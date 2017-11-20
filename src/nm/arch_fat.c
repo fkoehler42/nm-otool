@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/15 12:45:22 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/17 18:57:55 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/20 13:07:10 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,8 @@
 
 static int	parse_arch(t_nm *env, t_nm *env_cpy, struct fat_arch *arch)
 {
-	if (env->big_endian)
-	{
-		arch->offset = swap_bytes_uint32(arch->offset);
-		arch->cputype = swap_bytes_uint32(arch->cputype);
-	}
+	arch->offset = endianness(arch->offset, env->big_endian);
+	arch->cputype = endianness(arch->cputype, env->big_endian);
 	if (arch->cputype == CPU_TYPE_X86_64)
 	{
 		env_cpy->file_start = env->file_start + arch->offset;
@@ -26,7 +23,8 @@ static int	parse_arch(t_nm *env, t_nm *env_cpy, struct fat_arch *arch)
 	}
 	else if (arch->cputype == CPU_TYPE_POWERPC)
 	{
-		ft_putstr("I'm a PPC arch\n");
+		env_cpy->file_start = env->file_start + arch->offset;
+		return (ft_nm(env_cpy));
 	}
 	return (0);
 }
@@ -40,8 +38,7 @@ int			handle_fat(t_nm *env)
 
 	i = 0;
 	header = (struct fat_header*)env->file_start;
-	if (env->big_endian)
-		header->nfat_arch = swap_bytes_uint32(header->nfat_arch);
+	header->nfat_arch = endianness(header->nfat_arch, env->big_endian);
 	arch = (struct fat_arch*)(env->file_start + sizeof(*header));
 	copy_env_struct(env, &env_cpy);
 	while (i < header->nfat_arch)
