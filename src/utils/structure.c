@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/09 12:35:16 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/15 16:21:57 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/20 16:01:59 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,14 @@ void		copy_env_struct(t_nm *src, t_nm *dst)
 	dst->file_start = src->file_start;
 	dst->file_end = src->file_end;
 	dst->big_endian = src->big_endian;
+}
+
+void		init_syminfos_struct(t_syminfos *syminfos)
+{
+	syminfos->stringtab = NULL;
+	syminfos->symtab_32 = NULL;
+	syminfos->symtab_64 = NULL;
+	syminfos->nsyms = 0;
 }
 
 void		init_sections_struct(t_sec_location *sections)

@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/13 19:42:28 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/13 20:03:21 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/20 16:08:35 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static char	nsec_type(uint8_t nsec, t_sec_location *sections)
 }
 
 char		get_sym_type(uint8_t type, uint8_t nsec, uint64_t value,
-		t_sec_location *sections)
+t_sec_location *sections)
 {
 	char	c;
 

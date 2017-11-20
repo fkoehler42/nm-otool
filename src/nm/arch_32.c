@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/15 10:46:47 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/20 13:17:51 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/20 16:04:33 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,21 +67,24 @@ t_sec_location *sections)
 static int	symtab_infos_32(t_nm *env, uint32_t ncmds,
 struct symtab_command *symtab_command, struct load_command *lc_start)
 {
-	void			*stringtable;
-	struct nlist	*symtable;
+	t_syminfos		syminfos;
 	t_sec_location	sections;
 
-	stringtable = env->file_start +
-	endianness(symtab_command->stroff, env->big_endian);
-	symtable = env->file_start +
-	endianness(symtab_command->symoff, env->big_endian);
+	init_syminfos_struct(&syminfos);
 	init_sections_struct(&sections);
-	if (stringtable > env->file_end || (void*)symtable > env->file_end)
+	syminfos.nsyms = endianness(symtab_command->nsyms, env->big_endian);
+	syminfos.stringtab = env->file_start +
+	endianness(symtab_command->stroff, env->big_endian);
+	syminfos.symtab_32 = env->file_start +
+	endianness(symtab_command->symoff, env->big_endian);
+	if (syminfos.stringtab > env->file_end ||
+	(void*)syminfos.symtab_32 > env->file_end)
 		return (put_error(MALFORMED, env->exec, env->file_name));
 	if ((find_sections_32(env, ncmds, lc_start, &sections)) == -1)
 		return (put_error(MALFORMED, env->exec, env->file_name));
-	print_32(symtable, stringtable, &sections,
-	endianness(symtab_command->nsyms, env->big_endian));
+	set_symtab_endianness_32(syminfos.symtab_32, syminfos.nsyms,
+	env->big_endian);
+	print_32(&syminfos, &sections);
 	return (0);
 }
 

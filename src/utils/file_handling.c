@@ -6,26 +6,11 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/09 12:09:14 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/20 13:03:26 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/20 15:02:34 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "nm.h"
-
-int			is_big_endian(uint32_t magic_nb)
-{
-	return (magic_nb == MH_CIGAM || magic_nb == MH_CIGAM_64
-	|| magic_nb == FAT_CIGAM);
-}
-
-uint32_t	endianness(uint32_t value, int is_big_endian)
-{
-	if (is_big_endian)
-		return (((value & 0xFF) << 24) | (((value >> 8) & 0xFF) << 16) |
-	(((value >> 16) & 0xFF) << 8) | ((value >> 24) & 0xFF));
-	else
-		return (value);
-}
 
 int			handle_file(t_nm *env)
 {

@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/07 14:54:12 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/20 13:03:52 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/20 15:56:43 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,14 @@ typedef struct		s_sec_location
 	uint32_t		sec_index;
 }					t_sec_location;
 
+typedef struct			s_syminfos
+{
+	void				*stringtab;
+	struct nlist		*symtab_32;
+	struct nlist_64		*symtab_64;
+	uint32_t			nsyms;
+}						t_syminfos;
+
 typedef struct		s_nm
 {
 	t_executable	exec;
@@ -72,6 +80,8 @@ int					handle_lib(t_nm *env);
 
 int					is_big_endian(uint32_t magic_nb);
 uint32_t			endianness(uint32_t value, int is_big_endian);
+void				set_symtab_endianness_32(struct nlist *symtab,
+					uint32_t nsyms, int is_big_endian);
 int					handle_file(t_nm *env);
 
 char				get_sym_type(uint8_t type, uint8_t nsec, uint64_t value,
@@ -85,10 +95,10 @@ void				asc_sort_offset_array(uint32_t *array, uint32_t array_len);
 
 void				init_env_struct(t_nm *env);
 void				copy_env_struct(t_nm *src, t_nm *dst);
+void				init_syminfos_struct(t_syminfos *syminfos);
 void				init_sections_struct(t_sec_location *sections);
 
-void				print_32(struct nlist *symtab, void *stringtab,
-					t_sec_location *sections, uint32_t nsyms);
+void				print_32(t_syminfos *syminfos, t_sec_location *sections);
 void				print_64(struct nlist_64 *symtab, void *stringtab,
 					t_sec_location *sections, uint32_t nsyms);
 
