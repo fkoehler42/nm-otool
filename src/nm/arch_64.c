@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/08 14:15:30 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/20 13:11:03 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/20 17:18:29 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ t_sec_location *sections, void *file_end)
 	return (0);
 }
 
-static int	find_sections_64(uint32_t ncmds, struct load_command *lc,
-t_sec_location *sections, void *file_end)
+static int	find_sections_64(t_nm *env, uint32_t ncmds, struct load_command *lc,
+t_sec_location *sections)
 {
 	uint32_t					i;
 	struct segment_command_64	*sg;
@@ -48,17 +48,17 @@ t_sec_location *sections, void *file_end)
 	i = 0;
 	while (i < ncmds)
 	{
-		if ((void*)lc > file_end)
+		if ((void*)lc > env->file_end)
 			return (-1);
-		if (lc->cmd == LC_SEGMENT_64)
+		if (endianness(lc->cmd, env->big_endian) == LC_SEGMENT_64)
 		{
 			sg = (struct segment_command_64*)lc;
 			sec_64 = (struct section_64*)((void*)sg + sizeof(*sg));
-			if (get_sym_type_location_64(sg->nsects, sec_64, sections,
-			file_end) == -1)
+			if (get_sym_type_location_64(endianness(sg->nsects, env->big_endian),
+			sec_64, sections, env->file_end) == -1)
 				return (-1);
 		}
-		lc = (void*)lc + lc->cmdsize;
+		lc = (void*)lc + endianness(lc->cmdsize, env->big_endian);
 		i++;
 	}
 	return (0);
@@ -67,18 +67,24 @@ t_sec_location *sections, void *file_end)
 static int	symtab_infos_64(t_nm *env, uint32_t ncmds,
 struct symtab_command *symtab_command, struct load_command *lc_start)
 {
-	void			*stringtable;
-	struct nlist_64	*symtable;
+	t_syminfos		syminfos;
 	t_sec_location	sections;
 
-	stringtable = env->file_start + symtab_command->stroff;
-	symtable = env->file_start + symtab_command->symoff;
+	init_syminfos_struct(&syminfos);
 	init_sections_struct(&sections);
-	if (stringtable > env->file_end || (void*)symtable > env->file_end)
+	syminfos.nsyms = endianness(symtab_command->nsyms, env->big_endian);
+	syminfos.stringtab = env->file_start +
+	endianness(symtab_command->stroff, env->big_endian);
+	syminfos.symtab_64 = env->file_start +
+	endianness(symtab_command->symoff, env->big_endian);
+	if (syminfos.stringtab > env->file_end ||
+	(void*)syminfos.symtab_64 > env->file_end)
 		return (put_error(MALFORMED, env->exec, env->file_name));
-	if ((find_sections_64(ncmds, lc_start, &sections, env->file_end)) == -1)
+	if ((find_sections_64(env, ncmds, lc_start, &sections)) == -1)
 		return (put_error(MALFORMED, env->exec, env->file_name));
-	print_64(symtable, stringtable, &sections, symtab_command->nsyms);
+	set_symtab_endianness_64(syminfos.symtab_64, syminfos.nsyms,
+	env->big_endian);
+	print_64(&syminfos, &sections);
 	return (0);
 }
 

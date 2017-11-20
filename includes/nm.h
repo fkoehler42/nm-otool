@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/07 14:54:12 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/20 15:56:43 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/20 17:19:15 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ typedef struct		s_nm
 
 
 int					ft_nm(t_nm *env);
+int					handle_file(t_nm *env);
 int					handle_32(t_nm *env);
 int					handle_64(t_nm *env);
 int					handle_fat(t_nm *env);
@@ -82,7 +83,8 @@ int					is_big_endian(uint32_t magic_nb);
 uint32_t			endianness(uint32_t value, int is_big_endian);
 void				set_symtab_endianness_32(struct nlist *symtab,
 					uint32_t nsyms, int is_big_endian);
-int					handle_file(t_nm *env);
+void				set_symtab_endianness_64(struct nlist_64 *symtab,
+					uint32_t nsyms, int is_big_endian);
 
 char				get_sym_type(uint8_t type, uint8_t nsec, uint64_t value,
 					t_sec_location *sections);
@@ -99,8 +101,7 @@ void				init_syminfos_struct(t_syminfos *syminfos);
 void				init_sections_struct(t_sec_location *sections);
 
 void				print_32(t_syminfos *syminfos, t_sec_location *sections);
-void				print_64(struct nlist_64 *symtab, void *stringtab,
-					t_sec_location *sections, uint32_t nsyms);
+void				print_64(t_syminfos *syminfos, t_sec_location *sections);
 
 int					put_error(t_error_flag flag, t_executable exec, char *arg);
 
