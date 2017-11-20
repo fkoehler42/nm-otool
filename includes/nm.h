@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/07 14:54:12 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/20 17:19:15 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/20 20:11:08 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 #include <mach-o/nlist.h>
 #include <mach-o/fat.h>
 #include <mach-o/ranlib.h>
-#include <mach/machine.h>
+#include <mach-o/arch.h>
 #include <ar.h>
 
 typedef enum		e_executable
@@ -37,7 +37,9 @@ typedef enum		e_executable
 typedef enum		e_error_flag
 {
 	DIRECTORY,
+	DUP_OPT,
 	FSTAT,
+	INVALID_OPT,
 	MALFORMED,
 	MALLOC,
 	MAPPING,
@@ -62,17 +64,37 @@ typedef struct			s_syminfos
 	uint32_t			nsyms;
 }						t_syminfos;
 
+/*
+ * ft_nm available opts :
+ * -p : don't sort symbols (table order)
+ * -r : sort in reverse order
+ * -u : display only undefined symbols
+ * -U : don't display undefined symbols
+ * -j : display the symbol names only (no value or type)
+*/
+
+typedef struct		s_opts
+{
+	int				p;
+	int				r;
+	int				u;
+	int				U;
+	int				j;
+}					t_opts;
+
 typedef struct		s_nm
 {
 	t_executable	exec;
 	char			*file_name;
 	void			*file_start;
 	void			*file_end;
+	t_opts			*opts;
 	int				big_endian;
 }					t_nm;
 
 
 int					ft_nm(t_nm *env);
+int					parse_args(t_nm *env, int ac, char **av);
 int					handle_file(t_nm *env);
 int					handle_32(t_nm *env);
 int					handle_64(t_nm *env);
@@ -95,7 +117,7 @@ void				ascii_sort_64(struct nlist_64 *array, void *stringtable,
 					int nb_elem);
 void				asc_sort_offset_array(uint32_t *array, uint32_t array_len);
 
-void				init_env_struct(t_nm *env);
+int					init_env_struct(t_nm *env);
 void				copy_env_struct(t_nm *src, t_nm *dst);
 void				init_syminfos_struct(t_syminfos *syminfos);
 void				init_sections_struct(t_sec_location *sections);

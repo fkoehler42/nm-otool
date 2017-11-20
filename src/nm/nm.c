@@ -6,11 +6,62 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/07 15:03:48 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/20 13:04:53 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/20 20:25:09 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "nm.h"
+
+static int	add_opt(t_nm *env, char *arg)
+{
+	int	i;
+
+	i = 1;
+	while (arg[i])
+	{
+		if (arg[i] == 'p' && !env->opts->p)
+			env->opts->p = 1;
+		else if (arg[i] == 'r' && !env->opts->r)
+			env->opts->r = 1;
+		else if (arg[i] == 'u' && !env->opts->u)
+			env->opts->u = 1;
+		else if (arg[i] == 'U' && !env->opts->U)
+			env->opts->U = 1;
+		else if (arg[i] == 'j' && !env->opts->j)
+			env->opts->j = 1;
+		else if (arg[i] == 'p' || arg[i] == 'r' || arg[i] == 'u'
+		|| arg[i] == 'U' || arg[i] == 'j')
+			return (put_error(DUP_OPT, env->exec, arg));
+		else
+			return (put_error(INVALID_OPT, env->exec, arg));
+		i++;
+	}
+	return (0);
+}
+
+int			parse_args(t_nm *env, int ac, char **av)
+{
+	int		i;
+	int		j;
+	int		opts_end;
+
+	i = 0;
+	j = 0;
+	opts_end = 0;
+	while (++i < ac)
+	{
+		if (opts_end || av[i][0] != '-')
+			av[j++] = av[i];
+		else if (av[i][0] == '-' && av[i][1] == '-' && !av[i][2])
+			opts_end = 1;
+		else if (av[i][0] == '-' && add_opt(env, av[i]) == -1)
+			return (-1);
+	}
+	if (j == 0)
+		av[j++] = "a.out";
+	av[j] = NULL;
+	return (0);
+}
 
 int		ft_nm(t_nm *env)
 {
@@ -33,25 +84,21 @@ int		main(int ac, char **av)
 {
 	int			i;
 	int			ret;
-	t_nm	env;
+	t_nm		env;
 
 	i = 0;
 	ret = EXIT_SUCCESS;
 	env.exec = EXEC_NM;
-	init_env_struct(&env);
-	if (ac == 1)
+	if (init_env_struct(&env) == -1)
+		return (EXIT_FAILURE);
+	if (parse_args(&env, ac, av) == -1)
+		return (EXIT_FAILURE);
+	while (av[i] != NULL)
 	{
-		env.file_name = "a.out";
-		ret = handle_file(&env);
-	}
-	else
-	{
-		while (++i < ac)
-		{
-			env.file_name = av[i];
-			if (handle_file(&env) == -1)
-				ret = EXIT_FAILURE;
-		}
+		env.file_name = av[i];
+		if (handle_file(&env) == -1)
+			ret = EXIT_FAILURE;
+		i++;
 	}
 	return (ret);
 }

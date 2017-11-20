@@ -6,13 +6,22 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/08 11:13:33 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/13 12:22:45 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/20 20:15:14 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "nm.h"
 
-int		put_error(t_error_flag flag, t_executable exec, char *arg)
+static void	put_error_2(t_error_flag flag)
+{
+	if (flag == INVALID_OPT)
+		ft_putstr_fd(": Invalid argument\n", 2);
+	else if (flag == DUP_OPT)
+		ft_putstr_fd(": Duplicate option is invalid\n", 2);
+	ft_putstr_fd("Usage : ft_nm [-pruUj] [file ...]\n", 2);
+}
+
+int			put_error(t_error_flag flag, t_executable exec, char *arg)
 {
 	if (exec == EXEC_NM)
 		ft_putstr_fd("ft_nm: ", 2);
@@ -34,5 +43,7 @@ int		put_error(t_error_flag flag, t_executable exec, char *arg)
 		ft_putstr_fd(": Unable to map the file into memory.\n", 2);
 	else if (flag == UNMAPPING)
 		ft_putstr_fd(": Unable to release the file from memory.\n", 2);
+	else
+		put_error_2(flag);
 	return (-1);
 }
