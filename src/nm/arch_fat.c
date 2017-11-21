@@ -6,11 +6,38 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/15 12:45:22 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/21 12:55:30 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/21 15:32:28 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "nm.h"
+
+static int	handle_all_archs(t_nm *env, t_nm *env_cpy, struct fat_arch *arch,
+uint32_t nfat_arch)
+{
+	uint32_t	i;
+	int			nb_arch_handled;
+
+	i = 0;
+	nb_arch_handled = 0;
+	while (i < nfat_arch)
+	{
+		if (arch->cputype == CPU_TYPE_I386 || arch->cputype == CPU_TYPE_X86_64
+		|| arch->cputype == CPU_TYPE_POWERPC
+		|| arch->cputype == CPU_TYPE_POWERPC64)
+		{
+			env_cpy->file_start = env->file_start + arch->offset;
+			if (ft_nm(env_cpy) == -1)
+				return (-1);
+			nb_arch_handled++;
+		}
+		arch = (struct fat_arch*)(void*)arch + sizeof(*arch);
+		i++;
+	}
+	if (nb_arch_handled == 0)
+		put_error(NO_ARCH, env->exec, env->file_name);
+	return (0);
+}
 
 static void	*get_local_arch_ptr(t_nm *env, struct fat_arch *arch,
 uint32_t nfat_arch)
@@ -63,5 +90,5 @@ int			handle_fat(t_nm *env)
 	if (env->local_arch &&
 	(env_cpy.file_start = get_local_arch_ptr(env, arch, header->nfat_arch)))
 		return (ft_nm(&env_cpy));
-	return (handle_all_archs(env, &env_cpy, arch, nfat_arch));
+	return (handle_all_archs(env, &env_cpy, arch, header->nfat_arch));
 }

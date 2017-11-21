@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/08 11:13:33 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/20 20:15:14 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/21 14:30:11 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,14 @@
 
 static void	put_error_2(t_error_flag flag)
 {
-	if (flag == INVALID_OPT)
+	if (flag == NO_ARCH)
+		ft_putstr_fd(": Unknown architecture(s)\n", 2);
+	else if (flag == INVALID_OPT)
 		ft_putstr_fd(": Invalid argument\n", 2);
 	else if (flag == DUP_OPT)
 		ft_putstr_fd(": Duplicate option is invalid\n", 2);
-	ft_putstr_fd("Usage : ft_nm [-pruUj] [file ...]\n", 2);
+	if (flag == INVALID_OPT || flag == DUP_OPT)
+		ft_putstr_fd("Usage : ft_nm [-pruUj] [file ...]\n", 2);
 }
 
 int			put_error(t_error_flag flag, t_executable exec, char *arg)

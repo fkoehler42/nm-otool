@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/15 10:46:47 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/20 16:04:33 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/21 14:42:30 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ struct symtab_command *symtab_command, struct load_command *lc_start)
 		return (put_error(MALFORMED, env->exec, env->file_name));
 	set_symtab_endianness_32(syminfos.symtab_32, syminfos.nsyms,
 	env->big_endian);
-	print_32(&syminfos, &sections);
+	print_32(env, &syminfos, &sections);
 	return (0);
 }
 

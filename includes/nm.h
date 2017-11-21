@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/07 14:54:12 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/21 12:11:27 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/21 14:43:08 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef enum		e_error_flag
 	MALFORMED,
 	MALLOC,
 	MAPPING,
+	NO_ARCH,
 	OPEN,
 	UNMAPPING,
 	UNDEFINED
@@ -123,8 +124,10 @@ void				copy_env_struct(t_nm *src, t_nm *dst);
 void				init_syminfos_struct(t_syminfos *syminfos);
 void				init_sections_struct(t_sec_location *sections);
 
-void				print_32(t_syminfos *syminfos, t_sec_location *sections);
-void				print_64(t_syminfos *syminfos, t_sec_location *sections);
+void				print_32(t_nm *env, t_syminfos *syminfos,
+					t_sec_location *sections);
+void				print_64(t_nm *env, t_syminfos *syminfos,
+					t_sec_location *sections);
 
 int					put_error(t_error_flag flag, t_executable exec, char *arg);
 
