@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/20 15:02:44 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/20 17:14:18 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/21 16:22:17 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int			is_big_endian(uint32_t magic_nb)
 	|| magic_nb == FAT_CIGAM);
 }
 
-uint32_t	endianness(uint32_t value, int is_big_endian)
+uint64_t	endianness(uint64_t value, int is_big_endian)
 {
 	if (is_big_endian)
 		return (((value & 0xFF) << 24) | (((value >> 8) & 0xFF) << 16) |

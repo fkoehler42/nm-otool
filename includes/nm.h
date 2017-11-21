@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/07 14:54:12 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/21 14:43:08 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/21 16:22:11 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int					handle_fat(t_nm *env);
 int					handle_lib(t_nm *env);
 
 int					is_big_endian(uint32_t magic_nb);
-uint32_t			endianness(uint32_t value, int is_big_endian);
+uint64_t			endianness(uint64_t value, int is_big_endian);
 void				set_symtab_endianness_32(struct nlist *symtab,
 					uint32_t nsyms, int is_big_endian);
 void				set_symtab_endianness_64(struct nlist_64 *symtab,
