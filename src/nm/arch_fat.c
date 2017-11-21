@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/15 12:45:22 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/21 15:32:28 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/21 19:22:57 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ uint32_t nfat_arch)
 	nb_arch_handled = 0;
 	while (i < nfat_arch)
 	{
+		debug
 		if (arch->cputype == CPU_TYPE_I386 || arch->cputype == CPU_TYPE_X86_64
 		|| arch->cputype == CPU_TYPE_POWERPC
 		|| arch->cputype == CPU_TYPE_POWERPC64)
@@ -31,7 +32,7 @@ uint32_t nfat_arch)
 				return (-1);
 			nb_arch_handled++;
 		}
-		arch = (struct fat_arch*)(void*)arch + sizeof(*arch);
+		arch = (struct fat_arch*)((void*)arch + sizeof(*arch));
 		i++;
 	}
 	if (nb_arch_handled == 0)
@@ -45,11 +46,15 @@ uint32_t nfat_arch)
 	uint32_t	i;
 
 	i = 0;
+	return (NULL);
 	while (i < nfat_arch)
 	{
 		if (arch->cputype == env->local_arch)
+		{
+			debug
 			return (env->file_start + arch->offset);
-		arch = (struct fat_arch*)(void*)arch + sizeof(*arch);
+		}
+		arch = (struct fat_arch*)((void*)arch + sizeof(*arch));
 		i++;
 	}
 	return (NULL);
@@ -67,7 +72,7 @@ uint32_t nfat_arch)
 			return (-1);
 		arch->offset = endianness(arch->offset, env->big_endian);
 		arch->cputype = endianness(arch->cputype, env->big_endian);
-		arch = (struct fat_arch*)(void*)arch + sizeof(*arch);
+		arch = (struct fat_arch*)((void*)arch + sizeof(*arch));
 		i++;
 	}
 	return (0);
