@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/07 14:54:12 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/20 20:11:08 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/21 12:11:27 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ typedef struct		s_nm
 	void			*file_start;
 	void			*file_end;
 	t_opts			*opts;
+	cpu_type_t		local_arch;
 	int				big_endian;
 }					t_nm;
 

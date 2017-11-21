@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/09 12:35:16 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/20 20:03:02 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/21 12:14:45 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int			init_env_struct(t_nm *env)
 {
+	const NXArchInfo	*local_arch_info;
+
 	env->file_name = NULL;
 	env->file_start = NULL;
 	env->file_end = NULL;
@@ -25,6 +27,10 @@ int			init_env_struct(t_nm *env)
 	env->opts->U = 0;
 	env->opts->j = 0;
 	env->big_endian = 0;
+	if (!(local_arch_info = NXGetLocalArchInfo()))
+		env->local_arch = 0;
+	else
+		env->local_arch = local_arch_info->cputype;
 	return (0);
 }
 
@@ -34,6 +40,7 @@ void		copy_env_struct(t_nm *src, t_nm *dst)
 	dst->file_name = src->file_name;
 	dst->file_start = src->file_start;
 	dst->file_end = src->file_end;
+	dst->opts = src->opts;
 	dst->big_endian = src->big_endian;
 }
 
