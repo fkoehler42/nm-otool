@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ascii_sorting.c                                    :+:      :+:    :+:   */
+/*   rev_ascii_sorting.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/21 14:58:10 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/22 18:36:31 by fkoehler         ###   ########.fr       */
+/*   Created: 2017/11/22 15:06:13 by fkoehler          #+#    #+#             */
+/*   Updated: 2017/11/22 18:27:46 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "nm.h"
 
-static void	ascii_sort_duplicates_32(struct nlist *array, void *stringtable,
+static void	rev_ascii_sort_duplicates_32(struct nlist *array, void *stringtable,
 		int nb_elem)
 {
 	int				i;
@@ -27,7 +27,7 @@ static void	ascii_sort_duplicates_32(struct nlist *array, void *stringtable,
 		{
 			if (!ft_strcmp(stringtable + array[i].n_un.n_strx,
 			stringtable + array[j].n_un.n_strx) &&
-			(array[i].n_value > array[j].n_value))
+			(array[i].n_value < array[j].n_value))
 			{
 				tmp = array[i];
 				array[i] = array[j];
@@ -39,7 +39,7 @@ static void	ascii_sort_duplicates_32(struct nlist *array, void *stringtable,
 	}
 }
 
-static void	ascii_sort_duplicates_64(struct nlist_64 *array, void *stringtable,
+static void	rev_ascii_sort_duplicates_64(struct nlist_64 *array, void *stringtable,
 		int nb_elem)
 {
 	int				i;
@@ -54,7 +54,7 @@ static void	ascii_sort_duplicates_64(struct nlist_64 *array, void *stringtable,
 		{
 			if (!ft_strcmp(stringtable + array[i].n_un.n_strx,
 			stringtable + array[j].n_un.n_strx) &&
-			(array[i].n_value > array[j].n_value))
+			(array[i].n_value < array[j].n_value))
 			{
 				tmp = array[i];
 				array[i] = array[j];
@@ -66,7 +66,7 @@ static void	ascii_sort_duplicates_64(struct nlist_64 *array, void *stringtable,
 	}
 }
 
-void	ascii_sort_32(struct nlist *array, void *stringtable, int nb_elem)
+void	rev_ascii_sort_32(struct nlist *array, void *stringtable, int nb_elem)
 {
 	int				i;
 	int				j;
@@ -79,7 +79,7 @@ void	ascii_sort_32(struct nlist *array, void *stringtable, int nb_elem)
 		while (j < nb_elem)
 		{
 			if (ft_strcmp(stringtable + array[i].n_un.n_strx,
-			stringtable + array[j].n_un.n_strx) > 0)
+			stringtable + array[j].n_un.n_strx) < 0)
 			{
 				tmp = array[i];
 				array[i] = array[j];
@@ -89,10 +89,10 @@ void	ascii_sort_32(struct nlist *array, void *stringtable, int nb_elem)
 		}
 		i++;
 	}
-	ascii_sort_duplicates_32(array, stringtable, nb_elem);
+	rev_ascii_sort_duplicates_32(array, stringtable, nb_elem);
 }
 
-void	ascii_sort_64(struct nlist_64 *array, void *stringtable, int nb_elem)
+void	rev_ascii_sort_64(struct nlist_64 *array, void *stringtable, int nb_elem)
 {
 	int				i;
 	int				j;
@@ -105,7 +105,7 @@ void	ascii_sort_64(struct nlist_64 *array, void *stringtable, int nb_elem)
 		while (j < nb_elem)
 		{
 			if (ft_strcmp(stringtable + array[i].n_un.n_strx,
-			stringtable + array[j].n_un.n_strx) > 0)
+			stringtable + array[j].n_un.n_strx) < 0)
 			{
 				tmp = array[i];
 				array[i] = array[j];
@@ -115,5 +115,5 @@ void	ascii_sort_64(struct nlist_64 *array, void *stringtable, int nb_elem)
 		}
 		i++;
 	}
-	ascii_sort_duplicates_64(array, stringtable, nb_elem);
+	rev_ascii_sort_duplicates_64(array, stringtable, nb_elem);
 }

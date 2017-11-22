@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/13 19:10:45 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/22 18:19:18 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/22 19:14:54 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,21 +34,29 @@ int multiple_arch)
 		ft_printf("\n%s:\n", file_name);
 }
 
-static void	print_sym_32(uint32_t value, char type, char *str)
+static void	print_sym_32(uint32_t value, char type, char *str, t_opts *opts)
 {
-	if (!ft_strcmp(str, "radr://5614542") || type == '-')
+	if ((opts->u && opts->U) || (opts->u && type != 'u' && type != 'U') ||
+	(opts->U && (type == 'u' || type == 'U')) ||
+	type == '-' || !ft_strcmp(str, "radr://5614542"))
 		return ;
-	if (!value && (type == 'u' || type == 'U'))
+	if (opts->j || opts->u)
+		ft_putendl(str);
+	else if (!value && (type == 'u' || type == 'U'))
 		ft_printf("%8c %c %s\n", ' ', type, str);
 	else
 		ft_printf("%08lx %c %s\n", value, type, str);
 }
 
-static void	print_sym_64(uint64_t value, char type, char *str)
+static void	print_sym_64(uint64_t value, char type, char *str, t_opts *opts)
 {
-	if (!ft_strcmp(str, "radr://5614542") || type == '-')
+	if ((opts->u && opts->U) || (opts->u && type != 'u' && type != 'U') ||
+	(opts->U && (type == 'u' || type == 'U')) ||
+	type == '-' || !ft_strcmp(str, "radr://5614542"))
 		return ;
-	if (!value && (type == 'u' || type == 'U'))
+	if (opts->j || opts->u)
+		ft_putendl(str);
+	else if (!value && (type == 'u' || type == 'U'))
 		ft_printf("%16c %c %s\n", ' ', type, str);
 	else
 		ft_printf("%016llx %c %s\n", value, type, str);
@@ -63,8 +71,7 @@ void		print_32(t_nm *env, t_syminfos *syminfos, t_sec_location *sections)
 	if (check_stringtab_validity_32(env, syminfos->symtab_32,
 	syminfos->stringtab, syminfos->nsyms) == -1)
 		return;
-	ascii_sort_32(syminfos->symtab_32, syminfos->stringtab,
-	syminfos->nsyms);
+	sort_symtab(syminfos, env->opts);
 	print_infos(env->file_name, env->current_arch, env->multiple_arg,
 	env->multiple_arch);
 	while (i < syminfos->nsyms)
@@ -73,7 +80,8 @@ void		print_32(t_nm *env, t_syminfos *syminfos, t_sec_location *sections)
 		syminfos->symtab_32[i].n_sect,
 		(uint64_t)syminfos->symtab_32[i].n_value, sections);
 		print_sym_32(syminfos->symtab_32[i].n_value, sym_type,
-		(char*)(syminfos->stringtab + syminfos->symtab_32[i].n_un.n_strx));
+		(char*)(syminfos->stringtab + syminfos->symtab_32[i].n_un.n_strx),
+		env->opts);
 		i++;
 	}
 }
@@ -87,8 +95,7 @@ void		print_64(t_nm *env, t_syminfos *syminfos, t_sec_location *sections)
 	if (check_stringtab_validity_64(env, syminfos->symtab_64,
 	syminfos->stringtab, syminfos->nsyms) == -1)
 		return;
-	ascii_sort_64(syminfos->symtab_64, syminfos->stringtab,
-	syminfos->nsyms);
+	sort_symtab(syminfos, env->opts);
 	print_infos(env->file_name, env->current_arch, env->multiple_arg,
 	env->multiple_arch);
 	while (i < syminfos->nsyms)
@@ -97,7 +104,8 @@ void		print_64(t_nm *env, t_syminfos *syminfos, t_sec_location *sections)
 		syminfos->symtab_64[i].n_sect,
 		syminfos->symtab_64[i].n_value, sections);
 		print_sym_64(syminfos->symtab_64[i].n_value, sym_type,
-		(char*)(syminfos->stringtab + syminfos->symtab_64[i].n_un.n_strx));
+		(char*)(syminfos->stringtab + syminfos->symtab_64[i].n_un.n_strx),
+		env->opts);
 		i++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/07 14:54:12 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/22 18:19:09 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/22 19:13:52 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ typedef struct			s_syminfos
  * ft_nm available opts :
  * -p : don't sort symbols (table order)
  * -r : sort in reverse order
- * -u : display only undefined symbols
+ * -u : display only undefined symbols (name only)
  * -U : don't display undefined symbols
  * -j : display the symbol names only (no value or type)
 */
@@ -117,11 +117,16 @@ void				set_symtab_endianness_64(struct nlist_64 *symtab,
 char				get_sym_type(uint8_t type, uint8_t nsec, uint64_t value,
 					t_sec_location *sections);
 
+void				asc_sort_offset_array(uint32_t *array, uint32_t array_len);
+void				sort_symtab(t_syminfos *syminfos, t_opts *opts);
 void				ascii_sort_32(struct nlist *array, void *stringtable,
+					int nb_elem);
+void				rev_ascii_sort_32(struct nlist *array, void *stringtable,
 					int nb_elem);
 void				ascii_sort_64(struct nlist_64 *array, void *stringtable,
 					int nb_elem);
-void				asc_sort_offset_array(uint32_t *array, uint32_t array_len);
+void				rev_ascii_sort_64(struct nlist_64 *array, void *stringtable,
+					int nb_elem);
 
 int					init_env_struct(t_nm *env);
 void				copy_env_struct(t_nm *src, t_nm *dst);

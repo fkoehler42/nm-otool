@@ -6,7 +6,7 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/07 14:45:26 by fkoehler          #+#    #+#              #
-#    Updated: 2017/11/22 18:03:48 by fkoehler         ###   ########.fr        #
+#    Updated: 2017/11/22 18:48:05 by fkoehler         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,9 @@ NM_SRC = ar_lib.c \
 	  display.c \
 	  endianness.c \
 	  error.c \
+	  main_sorting.c \
 	  nm.c \
+	  rev_ascii_sorting.c \
 	  sym_type.c \
 	  structure.c
 
