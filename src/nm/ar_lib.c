@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/15 18:19:47 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/22 15:39:08 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/22 17:45:09 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,14 +70,15 @@ int		handle_lib(t_nm *env)
 {
 	uint32_t		offset;
 	uint32_t		libsize;
-	void			*offset_addr;
+	void			*offset_libtab;
 	struct ranlib	*libtab;
 
 	offset = ft_atoi(ft_strchr((char*)(env->file_start + SARMAG), '/') + 1);
-	offset_addr = env->file_start + sizeof(struct ar_hdr) + SARMAG + offset;
-	libtab = (struct ranlib*)(offset_addr + sizeof(uint32_t));
-	libsize = (*((int*)offset_addr)) / sizeof(struct ranlib);
-	if (offset_addr > env->file_end || (void*)libtab > env->file_end)
+	offset_libtab = env->file_start + sizeof(struct ar_hdr) + SARMAG + offset;
+	libtab = (struct ranlib*)(offset_libtab + sizeof(uint32_t));
+	libsize = (*((uint32_t*)offset_libtab)) / sizeof(struct ranlib);
+	if (env->file_start + *(uint32_t*)offset_libtab > env->file_end
+	|| (void*)libtab > env->file_end)
 		return (put_error(MALFORMED, env->exec, env->file_name));
 	handle_lib_ar(env, libtab, libsize);
 	return (0);
