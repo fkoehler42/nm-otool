@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/07 14:54:12 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/22 15:20:18 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/22 18:19:09 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,10 @@ void				print_32(t_nm *env, t_syminfos *syminfos,
 void				print_64(t_nm *env, t_syminfos *syminfos,
 					t_sec_location *sections);
 
+int					check_stringtab_validity_32(t_nm *env,
+					struct nlist *array, void *stringtable, int nb_elem);
+int					check_stringtab_validity_64(t_nm *env,
+					struct nlist_64 *array, void *stringtable, int nb_elem);
 int					put_error(t_error_flag flag, t_executable exec, char *arg);
 
 #endif

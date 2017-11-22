@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/13 19:10:45 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/22 15:39:25 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/22 18:19:18 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,9 @@ void		print_32(t_nm *env, t_syminfos *syminfos, t_sec_location *sections)
 	char		sym_type;
 
 	i = 0;
+	if (check_stringtab_validity_32(env, syminfos->symtab_32,
+	syminfos->stringtab, syminfos->nsyms) == -1)
+		return;
 	ascii_sort_32(syminfos->symtab_32, syminfos->stringtab,
 	syminfos->nsyms);
 	print_infos(env->file_name, env->current_arch, env->multiple_arg,
@@ -81,7 +84,9 @@ void		print_64(t_nm *env, t_syminfos *syminfos, t_sec_location *sections)
 	char		sym_type;
 
 	i = 0;
-	(void)env;
+	if (check_stringtab_validity_64(env, syminfos->symtab_64,
+	syminfos->stringtab, syminfos->nsyms) == -1)
+		return;
 	ascii_sort_64(syminfos->symtab_64, syminfos->stringtab,
 	syminfos->nsyms);
 	print_infos(env->file_name, env->current_arch, env->multiple_arg,

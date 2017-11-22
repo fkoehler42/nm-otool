@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/07 15:03:48 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/22 15:20:47 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/22 18:04:59 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,32 @@ int		ft_nm(t_nm *env)
 		handle_lib(env);
 	else
 		put_error(INVALID_FILE, env->exec, env->file_name);
+	return (0);
+}
+
+int			handle_file(t_nm *env)
+{
+	int			fd;
+	struct stat	buf;
+
+	if ((fd = open(env->file_name, O_RDONLY)) == -1)
+		return (put_error(OPEN, env->exec, env->file_name));
+	if (fstat(fd, &buf) == -1)
+		return (put_error(FSTAT, env->exec, env->file_name));
+	if (S_ISDIR(buf.st_mode))
+		return (put_error(DIRECTORY, env->exec, env->file_name));
+	if ((env->file_start = mmap(0, buf.st_size, PROT_READ | PROT_WRITE,
+	MAP_PRIVATE, fd, 0)) == MAP_FAILED)
+		return (put_error(MAPPING, env->exec, env->file_name));
+	env->file_end = env->file_start + buf.st_size - 1;
+	if (env->exec == EXEC_NM)
+		ft_nm(env);
+	/* else if (exec == EXEC_OTOOL) */
+		/* ft_otool(ptr); */
+	if (munmap(env->file_start, buf.st_size) == -1)
+		return (put_error(UNMAPPING, env->exec, env->file_name));
+	if (close(fd) == -1)
+		return (put_error(UNDEFINED, env->exec, env->file_name)); // error to define
 	return (0);
 }
 
