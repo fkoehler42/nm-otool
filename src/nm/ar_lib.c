@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/15 18:19:47 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/17 18:10:03 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/22 15:39:08 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ uint32_t array_len)
 
 	i = 0;
 	copy_env_struct(env, &env_cpy);
+	env_cpy.current_arch = -1;
 	while (i < array_len)
 	{
 		ar_header = (struct ar_hdr*)(env->file_start + ar_offset_array[i]);

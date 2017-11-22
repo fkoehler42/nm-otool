@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/07 14:54:12 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/21 18:32:27 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/22 15:20:18 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef enum		e_error_flag
 	DIRECTORY,
 	DUP_OPT,
 	FSTAT,
+	INVALID_FILE,
 	INVALID_OPT,
 	MALFORMED,
 	MALLOC,
@@ -91,6 +92,9 @@ typedef struct		s_nm
 	void			*file_end;
 	t_opts			*opts;
 	cpu_type_t		local_arch;
+	cpu_type_t		current_arch;
+	int				multiple_arg;
+	int				multiple_arch;
 	int				big_endian;
 }					t_nm;
 

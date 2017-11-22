@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/08 11:13:33 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/21 14:30:11 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/22 15:22:45 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,11 @@ static void	put_error_2(t_error_flag flag)
 {
 	if (flag == NO_ARCH)
 		ft_putstr_fd(": Unknown architecture(s)\n", 2);
+	else if (flag == INVALID_FILE)
+	{
+		ft_putstr_fd(": The file was not recognized as ", 2);
+		ft_putstr_fd("a valid object file\n", 2);
+	}
 	else if (flag == INVALID_OPT)
 		ft_putstr_fd(": Invalid argument\n", 2);
 	else if (flag == DUP_OPT)

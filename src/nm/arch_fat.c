@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/15 12:45:22 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/21 19:22:57 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/22 14:39:20 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ uint32_t nfat_arch)
 	nb_arch_handled = 0;
 	while (i < nfat_arch)
 	{
-		debug
-		if (arch->cputype == CPU_TYPE_I386 || arch->cputype == CPU_TYPE_X86_64
-		|| arch->cputype == CPU_TYPE_POWERPC
-		|| arch->cputype == CPU_TYPE_POWERPC64)
+		if (arch->cputype == CPU_TYPE_I386 || arch->cputype == CPU_TYPE_POWERPC
+		|| arch->cputype == CPU_TYPE_POWERPC64 || arch->cputype == CPU_TYPE_X86)
 		{
 			env_cpy->file_start = env->file_start + arch->offset;
+			env_cpy->current_arch = arch->cputype;
+			env_cpy->multiple_arch = 1;
 			if (ft_nm(env_cpy) == -1)
 				return (-1);
 			nb_arch_handled++;
@@ -46,14 +46,10 @@ uint32_t nfat_arch)
 	uint32_t	i;
 
 	i = 0;
-	return (NULL);
 	while (i < nfat_arch)
 	{
 		if (arch->cputype == env->local_arch)
-		{
-			debug
 			return (env->file_start + arch->offset);
-		}
 		arch = (struct fat_arch*)((void*)arch + sizeof(*arch));
 		i++;
 	}
@@ -92,8 +88,7 @@ int			handle_fat(t_nm *env)
 	copy_env_struct(env, &env_cpy);
 	if (set_archs_endianness(env, arch, header->nfat_arch) == -1)
 		return (put_error(MALFORMED, env->exec, env->file_name));
-	if (env->local_arch &&
-	(env_cpy.file_start = get_local_arch_ptr(env, arch, header->nfat_arch)))
+	if ((env_cpy.file_start = get_local_arch_ptr(env, arch, header->nfat_arch)))
 		return (ft_nm(&env_cpy));
 	return (handle_all_archs(env, &env_cpy, arch, header->nfat_arch));
 }

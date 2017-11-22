@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/07 15:03:48 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/21 16:55:34 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/22 15:20:47 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ int		ft_nm(t_nm *env)
 		handle_fat(env);
 	else if (!(ft_strncmp((char*)env->file_start, ARMAG, (size_t)SARMAG)))
 		handle_lib(env);
+	else
+		put_error(INVALID_FILE, env->exec, env->file_name);
 	return (0);
 }
 
@@ -93,6 +95,8 @@ int		main(int ac, char **av)
 		return (EXIT_FAILURE);
 	if (parse_args(&env, ac, av) == -1)
 		return (EXIT_FAILURE);
+	if (av[1])
+		env.multiple_arg = 1;
 	while (av[i] != NULL)
 	{
 		env.file_name = av[i];

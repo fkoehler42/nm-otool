@@ -6,11 +6,33 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/13 19:10:45 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/21 15:51:09 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/22 15:39:25 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "nm.h"
+
+static void	print_infos(char *file_name, cpu_type_t arch, int multiple_arg,
+int multiple_arch)
+{
+	char	*arch_name;
+
+	arch_name = NULL;
+	if (multiple_arch && arch)
+	{
+		if (arch == CPU_TYPE_I386)
+			arch_name = "i386";
+		else if (arch == CPU_TYPE_X86)
+			arch_name = "x86";
+		else if (arch == CPU_TYPE_POWERPC)
+			arch_name = "ppc";
+		else if (arch == CPU_TYPE_POWERPC64)
+			arch_name = "ppc64";
+		ft_printf("\n%s (for architecture %s):\n", file_name, arch_name);
+	}
+	else if (multiple_arg && arch != -1)
+		ft_printf("\n%s:\n", file_name);
+}
 
 static void	print_sym_32(uint32_t value, char type, char *str)
 {
@@ -38,9 +60,10 @@ void		print_32(t_nm *env, t_syminfos *syminfos, t_sec_location *sections)
 	char		sym_type;
 
 	i = 0;
-	(void)env;
 	ascii_sort_32(syminfos->symtab_32, syminfos->stringtab,
 	syminfos->nsyms);
+	print_infos(env->file_name, env->current_arch, env->multiple_arg,
+	env->multiple_arch);
 	while (i < syminfos->nsyms)
 	{
 		sym_type = get_sym_type(syminfos->symtab_32[i].n_type,
@@ -61,6 +84,8 @@ void		print_64(t_nm *env, t_syminfos *syminfos, t_sec_location *sections)
 	(void)env;
 	ascii_sort_64(syminfos->symtab_64, syminfos->stringtab,
 	syminfos->nsyms);
+	print_infos(env->file_name, env->current_arch, env->multiple_arg,
+	env->multiple_arch);
 	while (i < syminfos->nsyms)
 	{
 		sym_type = get_sym_type(syminfos->symtab_64[i].n_type,
