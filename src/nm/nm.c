@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/07 15:03:48 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/22 18:04:59 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/23 16:34:20 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,10 +97,7 @@ int			handle_file(t_nm *env)
 	MAP_PRIVATE, fd, 0)) == MAP_FAILED)
 		return (put_error(MAPPING, env->exec, env->file_name));
 	env->file_end = env->file_start + buf.st_size - 1;
-	if (env->exec == EXEC_NM)
-		ft_nm(env);
-	/* else if (exec == EXEC_OTOOL) */
-		/* ft_otool(ptr); */
+	ft_nm(env);
 	if (munmap(env->file_start, buf.st_size) == -1)
 		return (put_error(UNMAPPING, env->exec, env->file_name));
 	if (close(fd) == -1)
