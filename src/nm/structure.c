@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/09 12:35:16 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/22 15:14:08 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/23 17:16:59 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int			init_env_struct(t_nm *env)
 {
+	env->exec = EXEC_NM;
 	env->file_name = NULL;
 	env->file_start = NULL;
 	env->file_end = NULL;
