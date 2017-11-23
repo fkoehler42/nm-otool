@@ -6,7 +6,7 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/12/02 18:34:40 by fkoehler          #+#    #+#              #
-#    Updated: 2017/10/02 14:34:14 by fkoehler         ###   ########.fr        #
+#    Updated: 2017/11/23 19:34:54 by fkoehler         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,6 +54,7 @@ SRC = ft_atoi.c \
 	  ft_putstr_fd.c \
 	  ft_replace_char.c \
 	  ft_replace_str.c \
+	  ft_str_isempty.c \
 	  ft_strcat.c \
 	  ft_strchr.c \
 	  ft_strchr_index.c \
@@ -65,12 +66,12 @@ SRC = ft_atoi.c \
 	  ft_strdel.c \
 	  ft_strdup.c \
 	  ft_strequ.c \
-	  ft_str_isempty.c \
 	  ft_striter.c \
 	  ft_striteri.c \
 	  ft_strjoin.c \
 	  ft_strlcat.c \
 	  ft_strlen.c \
+	  ft_strlower.c \
 	  ft_strmap.c \
 	  ft_strmapi.c \
 	  ft_strncat.c \
@@ -85,6 +86,7 @@ SRC = ft_atoi.c \
 	  ft_strstr_index.c \
 	  ft_strsub.c \
 	  ft_strtrim.c \
+	  ft_strupper.c \
 	  ft_tolower.c \
 	  ft_toupper.c \
 	  free_tab.c \
