@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/15 12:45:22 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/22 14:39:20 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/23 14:50:34 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ uint32_t nfat_arch)
 		{
 			env_cpy->file_start = env->file_start + arch->offset;
 			env_cpy->current_arch = arch->cputype;
-			env_cpy->multiple_arch = 1;
+			env_cpy->multiple_arch = nfat_arch > 1 ? 1 : 0;
 			if (ft_nm(env_cpy) == -1)
 				return (-1);
 			nb_arch_handled++;
