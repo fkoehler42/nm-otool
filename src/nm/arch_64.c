@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/08 14:15:30 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/21 14:42:17 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/23 18:13:34 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ int			handle_64(t_nm *env)
 				return (-1);
 			break;
 		}
+		i++;
 		lc = (void*)lc + endianness(lc->cmdsize, env->big_endian);
 	}
 	return (0);
