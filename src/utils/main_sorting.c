@@ -6,11 +6,11 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/22 18:35:53 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/22 18:45:26 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/23 16:11:50 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "nm.h"
+#include "nm_otool_utils.h"
 
 void	sort_symtab(t_syminfos *syminfos, t_opts *opts)
 {

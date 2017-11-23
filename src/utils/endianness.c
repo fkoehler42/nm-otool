@@ -6,11 +6,11 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/20 15:02:44 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/21 16:22:17 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/23 16:11:32 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "nm.h"
+#include "nm_otool_utils.h"
 
 int			is_big_endian(uint32_t magic_nb)
 {

@@ -6,11 +6,11 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/22 15:06:13 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/22 18:27:46 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/23 16:12:02 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "nm.h"
+#include "nm_otool_utils.h"
 
 static void	rev_ascii_sort_duplicates_32(struct nlist *array, void *stringtable,
 		int nb_elem)

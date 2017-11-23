@@ -6,7 +6,7 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/07 14:45:26 by fkoehler          #+#    #+#              #
-#    Updated: 2017/11/23 15:30:45 by fkoehler         ###   ########.fr        #
+#    Updated: 2017/11/23 16:16:33 by fkoehler         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ NM_SRC = ar_lib.c \
 	  arch_fat.c \
 	  display.c \
 	  nm.c \
+	  overflow_protection.c \
 	  sym_type.c \
 	  structure.c
 
