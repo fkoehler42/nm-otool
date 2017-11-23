@@ -6,7 +6,7 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/07 14:45:26 by fkoehler          #+#    #+#              #
-#    Updated: 2017/11/23 16:16:33 by fkoehler         ###   ########.fr        #
+#    Updated: 2017/11/23 20:31:47 by fkoehler         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,13 @@ NM_SRC = ar_lib.c \
 	  sym_type.c \
 	  structure.c
 
-OTOOL_SRC = otool.c
+OTOOL_SRC = ar_lib.c \
+			arch_32.c \
+			arch_64.c \
+			arch_fat.c \
+	  		display.c \
+			otool.c \
+	  		structure.c
 
 UTILS_SRC = ascii_sorting.c \
 	  		endianness.c \
@@ -71,7 +77,7 @@ $(NM): $(LIB) $(NM_O2) $(UTILS_O2)
 	@echo "\033[0;34m$(NM) compilation done !\033[0;m"
 
 $(OTOOL): $(LIB) $(OTOOL_O2) $(UTILS_O2)
-	@$(CC) $(FLAGS) $(OTOOL_O2) -L $(LIBPATH) -lft -I $(LIBINC) -I $(INC) -o $@
+	@$(CC) $(FLAGS) $(OTOOL_O2) $(UTILS_O2) -L $(LIBPATH) -lft -I $(LIBINC) -I $(INC) -o $@
 	@echo "\033[0;34m$(OTOOL) compilation done !\033[0;m"
 
 $(LIB):
@@ -92,7 +98,7 @@ clean:
 	@echo "\033[0;34mNm-otool object files deleted !\033[0;m"
 
 fclean: clean
-	@rm -f $(NAME)
+	@rm -f $(NM) $(OTOOL)
 	@echo "\033[0;34m$(NM) and $(OTOOL) executables deleted !\033[0;m"
 	-@make fclean -C $(LIBPATH)
 

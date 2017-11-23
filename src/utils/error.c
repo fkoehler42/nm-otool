@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/08 11:13:33 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/23 16:10:42 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/23 17:14:03 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 static void	put_error_2(t_error_flag flag)
 {
-	if (flag == NO_ARCH)
+	if (flag == NO_ARG)
+		ft_putstr_fd("At least one file must be specified\n", 2);
+	else if (flag == NO_ARCH)
 		ft_putstr_fd(": Unknown architecture(s)\n", 2);
 	else if (flag == INVALID_FILE)
 	{

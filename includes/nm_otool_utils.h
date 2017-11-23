@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/23 16:03:02 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/23 16:15:34 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/23 17:13:22 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef enum		e_error_flag
 	MALLOC,
 	MAPPING,
 	NO_ARCH,
+	NO_ARG,
 	OPEN,
 	UNMAPPING,
 	UNDEFINED
