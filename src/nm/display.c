@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/13 19:10:45 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/22 19:14:54 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/29 19:10:46 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ int multiple_arch)
 
 static void	print_sym_32(uint32_t value, char type, char *str, t_opts *opts)
 {
-	if ((opts->u && opts->U) || (opts->u && type != 'u' && type != 'U') ||
-	(opts->U && (type == 'u' || type == 'U')) ||
+	if ((opts->u && opts->uu) || (opts->u && type != 'u' && type != 'U') ||
+	(opts->uu && (type == 'u' || type == 'U')) ||
 	type == '-' || !ft_strcmp(str, "radr://5614542"))
 		return ;
 	if (opts->j || opts->u)
@@ -50,8 +50,8 @@ static void	print_sym_32(uint32_t value, char type, char *str, t_opts *opts)
 
 static void	print_sym_64(uint64_t value, char type, char *str, t_opts *opts)
 {
-	if ((opts->u && opts->U) || (opts->u && type != 'u' && type != 'U') ||
-	(opts->U && (type == 'u' || type == 'U')) ||
+	if ((opts->u && opts->uu) || (opts->u && type != 'u' && type != 'U') ||
+	(opts->uu && (type == 'u' || type == 'U')) ||
 	type == '-' || !ft_strcmp(str, "radr://5614542"))
 		return ;
 	if (opts->j || opts->u)
@@ -70,7 +70,7 @@ void		print_32(t_nm *env, t_syminfos *syminfos, t_sec_location *sections)
 	i = 0;
 	if (check_stringtab_validity_32(env, syminfos->symtab_32,
 	syminfos->stringtab, syminfos->nsyms) == -1)
-		return;
+		return ;
 	sort_symtab(syminfos, env->opts);
 	print_infos(env->file_name, env->current_arch, env->multiple_arg,
 	env->multiple_arch);
@@ -94,7 +94,7 @@ void		print_64(t_nm *env, t_syminfos *syminfos, t_sec_location *sections)
 	i = 0;
 	if (check_stringtab_validity_64(env, syminfos->symtab_64,
 	syminfos->stringtab, syminfos->nsyms) == -1)
-		return;
+		return ;
 	sort_symtab(syminfos, env->opts);
 	print_infos(env->file_name, env->current_arch, env->multiple_arg,
 	env->multiple_arch);

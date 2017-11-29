@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 14:58:10 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/23 16:11:14 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/29 19:00:48 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static void	ascii_sort_duplicates_64(struct nlist_64 *array, void *stringtable,
 	}
 }
 
-void	ascii_sort_32(struct nlist *array, void *stringtable, int nb_elem)
+void		ascii_sort_32(struct nlist *array, void *stringtable, int nb_elem)
 {
 	int				i;
 	int				j;
@@ -92,7 +92,8 @@ void	ascii_sort_32(struct nlist *array, void *stringtable, int nb_elem)
 	ascii_sort_duplicates_32(array, stringtable, nb_elem);
 }
 
-void	ascii_sort_64(struct nlist_64 *array, void *stringtable, int nb_elem)
+void		ascii_sort_64(struct nlist_64 *array, void *stringtable,
+int nb_elem)
 {
 	int				i;
 	int				j;

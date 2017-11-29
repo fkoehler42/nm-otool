@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/22 18:35:53 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/23 16:11:50 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/29 18:58:38 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	sort_symtab(t_syminfos *syminfos, t_opts *opts)
 {
 	if (opts->p)
-		return;
+		return ;
 	if (syminfos->symtab_32)
 	{
 		if (opts->r)

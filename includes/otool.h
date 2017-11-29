@@ -6,14 +6,14 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/23 14:45:58 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/29 18:21:53 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/29 19:02:53 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef OTOOL_H
 # define OTOOL_H
 
-#include "nm_otool_utils.h"
+# include "nm_otool_utils.h"
 
 typedef struct		s_otool
 {

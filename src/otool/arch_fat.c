@@ -6,14 +6,14 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 12:53:51 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/29 13:06:02 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/29 18:52:20 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "otool.h"
 
-static int	handle_all_archs(t_otool *env, t_otool *env_cpy, struct fat_arch *arch,
-uint32_t nfat_arch)
+static int	handle_all_archs(t_otool *env, t_otool *env_cpy,
+struct fat_arch *arch, uint32_t nfat_arch)
 {
 	uint32_t	i;
 	int			nb_arch_handled;

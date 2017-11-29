@@ -6,13 +6,13 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 12:30:02 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/29 18:25:44 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/29 18:50:10 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "otool.h"
 
-static int get_sections_32(t_otool *env, struct load_command *lc)
+static int	get_sections_32(t_otool *env, struct load_command *lc)
 {
 	uint32_t					i;
 	struct segment_command		*sg;

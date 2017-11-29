@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/15 18:19:47 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/29 16:37:09 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/29 18:49:48 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ uint32_t array_len)
 	}
 }
 
-void	handle_lib_ar(t_otool *env, struct ranlib *libtab, uint32_t libsize)
+void		handle_lib_ar(t_otool *env, struct ranlib *libtab, uint32_t libsize)
 {
 	uint32_t	i;
 	uint32_t	j;
@@ -53,7 +53,7 @@ void	handle_lib_ar(t_otool *env, struct ranlib *libtab, uint32_t libsize)
 		while (j < array_len)
 		{
 			if (libtab[i].ran_off == ar_offset_array[j])
-				break;
+				break ;
 			j++;
 		}
 		if (j == array_len)
@@ -67,7 +67,7 @@ void	handle_lib_ar(t_otool *env, struct ranlib *libtab, uint32_t libsize)
 	browse_lib_ar(env, ar_offset_array, array_len);
 }
 
-int		handle_lib(t_otool *env)
+int			handle_lib(t_otool *env)
 {
 	uint32_t		offset;
 	uint32_t		libsize;

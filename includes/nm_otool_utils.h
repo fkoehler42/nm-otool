@@ -6,26 +6,24 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/23 16:03:02 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/23 17:13:22 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/29 19:18:05 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef NM_OTOOL_UTILS_H
 # define NM_OTOOL_UTILS_H
 
-# define debug ft_printf("%s, %d\n", __FILE__, __LINE__);
-
-#include "../libft/includes/libft.h"
-#include "../libft/includes/ft_printf.h"
-#include <fcntl.h>
-#include <sys/stat.h>
-#include <sys/mman.h>
-#include <mach-o/loader.h>
-#include <mach-o/nlist.h>
-#include <mach-o/fat.h>
-#include <mach-o/ranlib.h>
-#include <mach-o/arch.h>
-#include <ar.h>
+# include "../libft/includes/libft.h"
+# include "../libft/includes/ft_printf.h"
+# include <fcntl.h>
+# include <sys/stat.h>
+# include <sys/mman.h>
+# include <mach-o/loader.h>
+# include <mach-o/nlist.h>
+# include <mach-o/fat.h>
+# include <mach-o/ranlib.h>
+# include <mach-o/arch.h>
+# include <ar.h>
 
 typedef enum		e_executable
 {
@@ -36,6 +34,7 @@ typedef enum		e_executable
 
 typedef enum		e_error_flag
 {
+	CLOSE,
 	DIRECTORY,
 	DUP_OPT,
 	FSTAT,
@@ -59,21 +58,27 @@ typedef struct		s_sec_location
 	uint32_t		sec_index;
 }					t_sec_location;
 
-typedef struct			s_syminfos
+typedef struct		s_syminfos
 {
-	void				*stringtab;
-	struct nlist		*symtab_32;
-	struct nlist_64		*symtab_64;
-	uint32_t			nsyms;
-}						t_syminfos;
+	void			*stringtab;
+	struct nlist	*symtab_32;
+	struct nlist_64	*symtab_64;
+	uint32_t		nsyms;
+}					t_syminfos;
 
 /*
- * ft_nm available opts :
- * -p : don't sort symbols (table order)
- * -r : sort in reverse order
- * -u : display only undefined symbols (name only)
- * -U : don't display undefined symbols
- * -j : display the symbol names only (no value or type)
+** ft_nm available opts :
+**
+** -p : don't sort symbols (table order)
+** -r : sort in reverse order
+** -u : display only undefined symbols (name only)
+** -U : don't display undefined symbols
+** -j : display the symbol names only (no value or type)
+**
+** ft_otool available opts :
+**
+** by default, the behaviour is the -t option one (display text section)
+** -d : display the data section
 */
 
 typedef struct		s_opts
@@ -81,7 +86,7 @@ typedef struct		s_opts
 	int				p;
 	int				r;
 	int				u;
-	int				U;
+	int				uu;
 	int				j;
 }					t_opts;
 

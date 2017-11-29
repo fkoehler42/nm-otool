@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/08 14:15:30 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/29 11:50:58 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/29 18:45:46 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ t_sec_location *sections)
 		{
 			sg = (struct segment_command_64*)lc;
 			sec_64 = (struct section_64*)((void*)sg + sizeof(*sg));
-			if (get_sym_type_location_64(endianness(sg->nsects, env->big_endian),
-			sec_64, sections, env->file_end) == -1)
+			if (get_sym_type_location_64(endianness(sg->nsects,
+			env->big_endian), sec_64, sections, env->file_end) == -1)
 				return (-1);
 		}
 		lc = (void*)lc + endianness(lc->cmdsize, env->big_endian);
@@ -109,7 +109,7 @@ int			handle_64(t_nm *env)
 			if (symtab_infos_64(env, header->ncmds,
 			(struct symtab_command*)lc, lc_start) == -1)
 				return (-1);
-			break;
+			break ;
 		}
 		i++;
 		lc = (void*)lc + endianness(lc->cmdsize, env->big_endian);

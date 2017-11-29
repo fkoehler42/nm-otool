@@ -6,13 +6,13 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/08 14:15:30 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/29 18:25:20 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/29 18:52:54 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "otool.h"
 
-int is_sought_section(char *sec_name, char *seg_name, int option_data)
+int			is_sought_section(char *sec_name, char *seg_name, int option_data)
 {
 	char *sought_sec_name;
 	char *sought_seg_name;
@@ -25,7 +25,7 @@ int is_sought_section(char *sec_name, char *seg_name, int option_data)
 	return (0);
 }
 
-static int browse_sections_64(t_otool *env, struct load_command *lc)
+static int	browse_sections_64(t_otool *env, struct load_command *lc)
 {
 	uint32_t					i;
 	struct segment_command_64	*sg;

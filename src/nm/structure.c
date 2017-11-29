@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/09 12:35:16 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/29 18:33:32 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/29 19:11:43 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int			init_env_struct(t_nm *env)
 	env->opts->p = 0;
 	env->opts->r = 0;
 	env->opts->u = 0;
-	env->opts->U = 0;
+	env->opts->uu = 0;
 	env->opts->j = 0;
 	env->local_arch = CPU_TYPE_X86_64;
 	env->current_arch = 0;

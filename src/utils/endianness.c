@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/20 15:02:44 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/29 14:51:49 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/29 18:58:20 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,9 @@ int is_big_endian)
 	i = 0;
 	while (i < nsyms)
 	{
-		symtab[i].n_value =	endianness(symtab[i].n_value, is_big_endian);
-		symtab[i].n_un.n_strx = endianness(symtab[i].n_un.n_strx, is_big_endian);
+		symtab[i].n_value = endianness(symtab[i].n_value, is_big_endian);
+		symtab[i].n_un.n_strx = endianness(symtab[i].n_un.n_strx,
+		is_big_endian);
 		i++;
 	}
 }
@@ -49,8 +50,9 @@ int is_big_endian)
 	i = 0;
 	while (i < nsyms)
 	{
-		symtab[i].n_value =	endianness(symtab[i].n_value, is_big_endian);
-		symtab[i].n_un.n_strx = endianness(symtab[i].n_un.n_strx, is_big_endian);
+		symtab[i].n_value = endianness(symtab[i].n_value, is_big_endian);
+		symtab[i].n_un.n_strx = endianness(symtab[i].n_un.n_strx,
+		is_big_endian);
 		i++;
 	}
 }

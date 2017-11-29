@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/22 15:06:13 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/23 16:12:02 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/29 19:00:32 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ static void	rev_ascii_sort_duplicates_32(struct nlist *array, void *stringtable,
 	}
 }
 
-static void	rev_ascii_sort_duplicates_64(struct nlist_64 *array, void *stringtable,
-		int nb_elem)
+static void	rev_ascii_sort_duplicates_64(struct nlist_64 *array,
+void *stringtable, int nb_elem)
 {
 	int				i;
 	int				j;
@@ -66,7 +66,8 @@ static void	rev_ascii_sort_duplicates_64(struct nlist_64 *array, void *stringtab
 	}
 }
 
-void	rev_ascii_sort_32(struct nlist *array, void *stringtable, int nb_elem)
+void		rev_ascii_sort_32(struct nlist *array, void *stringtable,
+int nb_elem)
 {
 	int				i;
 	int				j;
@@ -92,7 +93,8 @@ void	rev_ascii_sort_32(struct nlist *array, void *stringtable, int nb_elem)
 	rev_ascii_sort_duplicates_32(array, stringtable, nb_elem);
 }
 
-void	rev_ascii_sort_64(struct nlist_64 *array, void *stringtable, int nb_elem)
+void		rev_ascii_sort_64(struct nlist_64 *array, void *stringtable,
+int nb_elem)
 {
 	int				i;
 	int				j;

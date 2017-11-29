@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/08 11:13:33 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/29 17:34:14 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/29 18:55:37 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 static void	put_error_2(t_error_flag flag, t_executable exec)
 {
-	if (flag == NO_ARG)
+	if (flag == CLOSE)
+		ft_putstr_fd("Unable to close the fd related to the file\n", 2);
+	else if (flag == NO_ARG)
 		ft_putstr_fd("At least one file must be specified\n", 2);
 	else if (flag == NO_ARCH)
 		ft_putstr_fd(": Unknown architecture(s)\n", 2);
