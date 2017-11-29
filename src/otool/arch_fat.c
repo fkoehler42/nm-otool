@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/15 12:45:22 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/23 20:01:00 by fkoehler         ###   ########.fr       */
+/*   Created: 2017/11/29 12:53:51 by fkoehler          #+#    #+#             */
+/*   Updated: 2017/11/29 13:06:02 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ uint32_t nfat_arch)
 		|| arch->cputype == CPU_TYPE_POWERPC64 || arch->cputype == CPU_TYPE_X86)
 		{
 			env_cpy->file_start = env->file_start + arch->offset;
+			env_cpy->current_arch = arch->cputype;
+			env_cpy->multiple_arch = nfat_arch > 1 ? 1 : 0;
 			if (ft_otool(env_cpy) == -1)
 				return (-1);
 			nb_arch_handled++;
@@ -43,10 +45,11 @@ uint32_t nfat_arch)
 {
 	uint32_t	i;
 
-	(void)env;
 	i = 0;
 	while (i < nfat_arch)
 	{
+		if (arch->cputype == env->local_arch)
+			return (env->file_start + arch->offset);
 		arch = (struct fat_arch*)((void*)arch + sizeof(*arch));
 		i++;
 	}
@@ -82,6 +85,7 @@ int			handle_fat(t_otool *env)
 	header = (struct fat_header*)env->file_start;
 	header->nfat_arch = endianness(header->nfat_arch, env->big_endian);
 	arch = (struct fat_arch*)(env->file_start + sizeof(*header));
+	copy_env_struct(env, &env_cpy);
 	if (set_archs_endianness(env, arch, header->nfat_arch) == -1)
 		return (put_error(MALFORMED, env->exec, env->file_name));
 	if ((env_cpy.file_start = get_local_arch_ptr(env, arch, header->nfat_arch)))

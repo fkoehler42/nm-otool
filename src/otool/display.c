@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/23 18:32:44 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/29 12:39:49 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/29 13:28:36 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,27 @@ static void	print_byte_value(uint8_t byte)
 		ft_put_uintmax(byte, 16);
 		ft_putchar(' ');
 	}
+}
+
+void		print_infos(char *file_name, cpu_type_t arch, int multiple_arch)
+{
+	char	*arch_name;
+
+	arch_name = NULL;
+	if (multiple_arch && arch)
+	{
+		if (arch == CPU_TYPE_I386)
+			arch_name = "i386";
+		else if (arch == CPU_TYPE_X86)
+			arch_name = "x86";
+		else if (arch == CPU_TYPE_POWERPC)
+			arch_name = "ppc";
+		else if (arch == CPU_TYPE_POWERPC64)
+			arch_name = "ppc64";
+		ft_printf("%s (architecture %s):\n", file_name, arch_name);
+	}
+	else
+		ft_printf("%s:\n", file_name);
 }
 
 void		print_section_32(char *sec_name, uint32_t sec_addr,
@@ -46,7 +67,8 @@ uint32_t sec_size, uint8_t *content)
 			ft_putchar('\n');
 		content++;
 	}
-	ft_putchar('\n');
+	if (i > 0)
+		ft_putchar('\n');
 }
 
 void		print_section_64(char *sec_name, uint64_t sec_addr,
@@ -70,5 +92,6 @@ uint64_t sec_size, uint8_t *content)
 			ft_putchar('\n');
 		content++;
 	}
-	ft_putchar('\n');
+	if (i > 0)
+		ft_putchar('\n');
 }
