@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/08 14:15:30 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/29 12:05:00 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/29 12:15:21 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int get_sections_64(t_otool *env, struct load_command *lc)
 		{
 			ft_printf("%s:\n", env->file_name);
 			print_section_64(sec_64->sectname, sec_64->addr, sec_64->size,
-			(unsigned char*)(env->file_start + sec_64->offset));
+			(uint8_t*)(env->file_start + sec_64->offset));
 		}
 		i++;
 		sec_64 = (void*)sec_64 + sizeof(*sec_64);
