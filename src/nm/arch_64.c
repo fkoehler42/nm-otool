@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/08 14:15:30 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/23 18:13:34 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/29 11:50:58 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_sec_location *sections, void *file_end)
 		else if (ft_strcmp(sec_64->sectname, SECT_BSS) == 0 &&
 		ft_strcmp(sec_64->segname, SEG_DATA) == 0)
 			sections->bss = sections->sec_index;
-		sec_64 = (void *)sec_64 + sizeof(*sec_64);
+		sec_64 = (void*)sec_64 + sizeof(*sec_64);
 		sections->sec_index++;
 		i++;
 	}
