@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/07 15:03:48 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/23 17:16:42 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/29 18:33:31 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ int		main(int ac, char **av)
 		env.multiple_arg = 1;
 	while (av[i] != NULL)
 	{
-		env.file_name = av[i];
+		update_env_struct(&env, av[i]);
 		if (handle_file(&env) == -1)
 			ret = EXIT_FAILURE;
 		i++;

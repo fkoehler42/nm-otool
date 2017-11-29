@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/09 12:35:16 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/23 17:16:59 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/29 18:33:32 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,16 @@ int			init_env_struct(t_nm *env)
 	env->multiple_arch = 0;
 	env->big_endian = 0;
 	return (0);
+}
+
+void		update_env_struct(t_nm *env, char *arg)
+{
+	env->file_name = arg;
+	env->file_start = NULL;
+	env->file_end = NULL;
+	env->current_arch = 0;
+	env->multiple_arch = 0;
+	env->big_endian = 0;
 }
 
 void		copy_env_struct(t_nm *src, t_nm *dst)

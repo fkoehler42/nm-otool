@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/07 14:54:12 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/23 16:16:07 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/29 18:33:28 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ char				get_sym_type(uint8_t type, uint8_t nsec, uint64_t value,
 					t_sec_location *sections);
 
 int					init_env_struct(t_nm *env);
+void				update_env_struct(t_nm *env, char *arg);
 void				copy_env_struct(t_nm *src, t_nm *dst);
 void				init_syminfos_struct(t_syminfos *syminfos);
 void				init_sections_struct(t_sec_location *sections);
