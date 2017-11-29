@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 12:30:02 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/29 16:20:45 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/29 18:25:44 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,12 @@ static int get_sections_32(t_otool *env, struct load_command *lc)
 	{
 		if ((void*)sec_32 > env->file_end)
 			return (put_error(MALFORMED, env->exec, env->file_name));
-		if (!ft_strcmp(sec_32->sectname, SECT_TEXT) &&
-		!ft_strcmp(sec_32->segname, SEG_TEXT))
+		if (is_sought_section(sec_32->sectname, sec_32->segname,
+		env->opt_data))
 		{
 			if (set_section_32_endianness(env, sec_32) == -1)
 				return (put_error(MALFORMED, env->exec, env->file_name));
+			env->printed = 1;
 			print_section_32(env, sec_32);
 		}
 		i++;
@@ -61,5 +62,7 @@ int			handle_32(t_otool *env)
 		i++;
 		lc = (void*)lc + endianness(lc->cmdsize, env->big_endian);
 	}
+	if (!env->printed && env->current_arch != -1)
+		ft_printf("%s:\n", env->file_name);
 	return (0);
 }

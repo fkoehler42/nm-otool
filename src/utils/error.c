@@ -6,13 +6,13 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/08 11:13:33 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/23 17:14:03 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/29 17:34:14 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "nm_otool_utils.h"
 
-static void	put_error_2(t_error_flag flag)
+static void	put_error_2(t_error_flag flag, t_executable exec)
 {
 	if (flag == NO_ARG)
 		ft_putstr_fd("At least one file must be specified\n", 2);
@@ -28,7 +28,12 @@ static void	put_error_2(t_error_flag flag)
 	else if (flag == DUP_OPT)
 		ft_putstr_fd(": Duplicate option is invalid\n", 2);
 	if (flag == INVALID_OPT || flag == DUP_OPT)
-		ft_putstr_fd("Usage : ft_nm [-pruUj] [file ...]\n", 2);
+	{
+		if (exec == EXEC_NM)
+			ft_putstr_fd("Usage : ft_nm [-pruUj] [file ...]\n", 2);
+		else if (exec == EXEC_OTOOL)
+			ft_putstr_fd("Usage : ft_otool [-d] [file ...]\n", 2);
+	}
 }
 
 int			put_error(t_error_flag flag, t_executable exec, char *arg)
@@ -46,7 +51,7 @@ int			put_error(t_error_flag flag, t_executable exec, char *arg)
 	else if (flag == DIRECTORY)
 		ft_putstr_fd(": Is a directory.\n", 2);
 	else if (flag == MALFORMED)
-		ft_putstr_fd(": The file is malformed.\n", 2);
+		ft_putstr_fd(": The file is truncated or malformed.\n", 2);
 	else if (flag == MALLOC)
 		ft_putstr_fd(": Memory allocation error.\n", 2);
 	else if (flag == MAPPING)
@@ -54,6 +59,6 @@ int			put_error(t_error_flag flag, t_executable exec, char *arg)
 	else if (flag == UNMAPPING)
 		ft_putstr_fd(": Unable to release the file from memory.\n", 2);
 	else
-		put_error_2(flag);
+		put_error_2(flag, exec);
 	return (-1);
 }

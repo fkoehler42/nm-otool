@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/23 14:45:16 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/29 17:28:46 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/29 18:22:15 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,13 +104,12 @@ int		main(int ac, char **av)
 
 	i = 0;
 	ret = EXIT_SUCCESS;
-	if (init_env_struct(&env) == -1)
-		return (EXIT_FAILURE);
+	init_env_struct(&env);
 	if (parse_args(&env, ac, av) == -1)
 		return (EXIT_FAILURE);
 	while (av[i] != NULL)
 	{
-		env.file_name = av[i];
+		update_env_struct(&env, av[i]);
 		if (handle_file(&env) == -1)
 			ret = EXIT_FAILURE;
 		i++;
