@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 12:30:02 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/29 12:41:53 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/29 16:20:45 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ static int get_sections_32(t_otool *env, struct load_command *lc)
 		if (!ft_strcmp(sec_32->sectname, SECT_TEXT) &&
 		!ft_strcmp(sec_32->segname, SEG_TEXT))
 		{
-			ft_printf("%s:\n", env->file_name);
-			print_section_32(sec_32->sectname, sec_32->addr, sec_32->size,
-			(uint8_t*)(env->file_start + sec_32->offset));
+			if (set_section_32_endianness(env, sec_32) == -1)
+				return (put_error(MALFORMED, env->exec, env->file_name));
+			print_section_32(env, sec_32);
 		}
 		i++;
 		sec_32 = (void*)sec_32 + sizeof(*sec_32);

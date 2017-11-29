@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/23 14:45:16 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/23 20:25:46 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/29 17:28:46 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,9 @@ static int	add_opt(t_otool *env, char *arg)
 	i = 1;
 	while (arg[i])
 	{
-		if (arg[i] == 'p' && !env->opts->p)
-			env->opts->p = 1;
-		else if (arg[i] == 'r' && !env->opts->r)
-			env->opts->r = 1;
-		else if (arg[i] == 'u' && !env->opts->u)
-			env->opts->u = 1;
-		else if (arg[i] == 'U' && !env->opts->U)
-			env->opts->U = 1;
-		else if (arg[i] == 'j' && !env->opts->j)
-			env->opts->j = 1;
-		else if (arg[i] == 'p' || arg[i] == 'r' || arg[i] == 'u'
-		|| arg[i] == 'U' || arg[i] == 'j')
+		if (arg[i] == 'd' && !env->opt_data)
+			env->opt_data = 1;
+		else if (arg[i] == 'd')
 			return (put_error(DUP_OPT, env->exec, arg));
 		else
 			return (put_error(INVALID_OPT, env->exec, arg));

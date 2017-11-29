@@ -6,26 +6,25 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/23 18:32:44 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/29 13:28:36 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/29 16:44:53 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "otool.h"
 
-static void	print_byte_value(uint8_t byte)
+static void	print_byte_value(uint8_t byte, uint64_t byte_index, cpu_type_t arch)
 {
-	if (byte == 0)
-		ft_putstr("00 ");
-	else
-	{
-		if (byte < 16)
-			ft_putchar('0');
-		ft_put_uintmax(byte, 16);
+	if (byte < 16)
+		ft_putchar('0');
+	ft_put_uintmax(byte, 16);
+	if (((arch != CPU_TYPE_POWERPC) && (arch != CPU_TYPE_POWERPC64)) ||
+	(((arch == CPU_TYPE_POWERPC) || (arch == CPU_TYPE_POWERPC64)) &&
+	(byte_index != 0) && (++byte_index % 4 == 0)))
 		ft_putchar(' ');
-	}
 }
 
-void		print_infos(char *file_name, cpu_type_t arch, int multiple_arch)
+static void	print_infos(char *file_name, cpu_type_t arch, int multiple_arch,
+char *sec_name)
 {
 	char	*arch_name;
 
@@ -40,57 +39,66 @@ void		print_infos(char *file_name, cpu_type_t arch, int multiple_arch)
 			arch_name = "ppc";
 		else if (arch == CPU_TYPE_POWERPC64)
 			arch_name = "ppc64";
-		ft_printf("%s (architecture %s):\n", file_name, arch_name);
+		ft_printf("%s (architecture %s):\nContents of (%s,",
+		file_name, arch_name, ft_strupper(sec_name));
+		ft_printf("%s) section\n", ft_strlower(sec_name));
 	}
 	else
-		ft_printf("%s:\n", file_name);
+	{
+		if (arch != -1)
+			ft_printf("%s:\n", file_name);
+		ft_printf("Contents of (%s,", ft_strupper(sec_name));
+		ft_printf("%s) section\n", ft_strlower(sec_name));
+	}
 }
 
-void		print_section_32(char *sec_name, uint32_t sec_addr,
-uint32_t sec_size, uint8_t *content)
+void		print_section_32(t_otool *env, struct section *sec)
 {
 	uint32_t	i;
+	uint8_t		*sec_content;
 
 	i = 0;
-	ft_printf("Contents of (%s,", ft_strupper(sec_name));
-	ft_printf("%s) section\n", ft_strlower(sec_name));
-	while (i < sec_size)
+	sec_content = (uint8_t*)(env->file_start + sec->offset);
+	print_infos(env->file_name, env->current_arch, env->multiple_arch,
+	sec->sectname);
+	while (i < sec->size)
 	{
 		if (i == 0 || i % 16 == 0)
 		{
 			if (i != 0)
-				sec_addr += 16;
-			ft_printf("%08lx\t", sec_addr);
+				sec->addr += 16;
+			ft_printf("%08lx\t", sec->addr);
 		}
-		print_byte_value(*content);
-		if ((++i % 16) == 0 && i < sec_size)
+		print_byte_value(*sec_content, (uint64_t)i, env->current_arch);
+		if ((++i % 16) == 0 && i < sec->size)
 			ft_putchar('\n');
-		content++;
+		sec_content++;
 	}
 	if (i > 0)
 		ft_putchar('\n');
 }
 
-void		print_section_64(char *sec_name, uint64_t sec_addr,
-uint64_t sec_size, uint8_t *content)
+void		print_section_64(t_otool *env, struct section_64 *sec)
 {
 	uint64_t	i;
+	uint8_t		*sec_content;
 
 	i = 0;
-	ft_printf("Contents of (%s,", ft_strupper(sec_name));
-	ft_printf("%s) section\n", ft_strlower(sec_name));
-	while (i < sec_size)
+	sec_content = (uint8_t*)(env->file_start + sec->offset);
+	print_infos(env->file_name, env->current_arch, env->multiple_arch,
+	sec->sectname);
+	while (i < sec->size)
 	{
 		if (i == 0 || i % 16 == 0)
 		{
 			if (i != 0)
-				sec_addr += 16;
-			ft_printf("%016llx\t", sec_addr);
+				sec->addr += 16;
+			ft_printf("%016llx\t", sec->addr);
 		}
-		print_byte_value(*content);
-		if ((++i % 16) == 0 && i < sec_size)
+		print_byte_value(*sec_content, i, env->current_arch);
+		if ((++i % 16) == 0 && i < sec->size)
 			ft_putchar('\n');
-		content++;
+		sec_content++;
 	}
 	if (i > 0)
 		ft_putchar('\n');

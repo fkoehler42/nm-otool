@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/15 18:19:47 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/23 19:55:38 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/29 16:37:09 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@ uint32_t array_len)
 	t_otool			env_cpy;
 
 	i = 0;
+	copy_env_struct(env, &env_cpy);
+	env_cpy.current_arch = -1;
+	ft_printf("Archive : %s\n", env->file_name);
 	while (i < array_len)
 	{
 		ar_header = (struct ar_hdr*)(env->file_start + ar_offset_array[i]);
@@ -29,7 +32,7 @@ uint32_t array_len)
 		ar_header_offset = ft_atoi(ft_strchr(ar_header->ar_name, '/') + 1);
 		env_cpy.file_start = (void*)ar_header
 		+ sizeof(*ar_header) + ar_header_offset;
-		ft_printf("\n%s(%s):\n", env->file_name, ar_name);
+		ft_printf("%s(%s):\n", env->file_name, ar_name);
 		ft_otool(&env_cpy);
 		i++;
 	}
@@ -60,6 +63,7 @@ void	handle_lib_ar(t_otool *env, struct ranlib *libtab, uint32_t libsize)
 		}
 		i++;
 	}
+	asc_sort_offset_array(ar_offset_array, array_len);
 	browse_lib_ar(env, ar_offset_array, array_len);
 }
 

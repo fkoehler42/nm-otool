@@ -6,7 +6,7 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/07 14:45:26 by fkoehler          #+#    #+#              #
-#    Updated: 2017/11/23 20:31:47 by fkoehler         ###   ########.fr        #
+#    Updated: 2017/11/29 15:12:31 by fkoehler         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ OTOOL_SRC = ar_lib.c \
 			arch_fat.c \
 	  		display.c \
 			otool.c \
+			section_endianness.c \
 	  		structure.c
 
 UTILS_SRC = ascii_sorting.c \
