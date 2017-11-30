@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/15 12:45:22 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/23 14:50:34 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/30 20:01:45 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,9 @@ uint32_t nfat_arch)
 		if (arch->cputype == CPU_TYPE_I386 || arch->cputype == CPU_TYPE_POWERPC
 		|| arch->cputype == CPU_TYPE_POWERPC64 || arch->cputype == CPU_TYPE_X86)
 		{
-			env_cpy->file_start = env->file_start + arch->offset;
+			if ((env_cpy->file_start = env->file_start + arch->offset)
+			> env->file_end)
+				return (put_error(MALFORMED, env->exec, env->file_start));
 			env_cpy->current_arch = arch->cputype;
 			env_cpy->multiple_arch = nfat_arch > 1 ? 1 : 0;
 			if (ft_nm(env_cpy) == -1)
@@ -44,12 +46,17 @@ static void	*get_local_arch_ptr(t_nm *env, struct fat_arch *arch,
 uint32_t nfat_arch)
 {
 	uint32_t	i;
+	void		*file_start;
 
 	i = 0;
 	while (i < nfat_arch)
 	{
 		if (arch->cputype == env->local_arch)
-			return (env->file_start + arch->offset);
+		{
+			if ((file_start = env->file_start + arch->offset) > env->file_end)
+				return (put_error(MALFORMED, env->exec, env->file_start));
+			return (file_start);
+		}
 		arch = (struct fat_arch*)((void*)arch + sizeof(*arch));
 		i++;
 	}
