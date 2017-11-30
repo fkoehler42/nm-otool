@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 12:30:02 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/29 18:50:10 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/30 14:50:03 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,10 @@ int			handle_32(t_otool *env)
 	header = (struct mach_header*)env->file_start;
 	lc = (struct load_command*)(env->file_start + sizeof(*header));
 	header->ncmds = endianness(header->ncmds, env->big_endian);
+	if (check_load_command_overflow(env, lc, header->ncmds) == -1)
+		return (-1);
 	while (i < header->ncmds)
 	{
-		if ((void*)lc > env->file_end)
-			return (put_error(MALFORMED, env->exec, env->file_name));
 		if (endianness(lc->cmd, env->big_endian) == LC_SEGMENT)
 		{
 			if (get_sections_32(env, lc) == -1)

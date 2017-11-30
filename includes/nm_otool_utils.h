@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/23 16:03:02 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/29 19:18:05 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/30 14:58:20 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "../libft/includes/libft.h"
 # include "../libft/includes/ft_printf.h"
+# include <errno.h>
 # include <fcntl.h>
 # include <sys/stat.h>
 # include <sys/mman.h>

@@ -6,11 +6,27 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/08 14:15:30 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/29 18:52:54 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/30 14:51:35 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "otool.h"
+
+int			check_load_command_overflow(t_otool *env, struct load_command *lc,
+uint32_t ncmds)
+{
+	uint32_t	i;
+
+	i = 0;
+	while (i < ncmds)
+	{
+		if ((void*)lc > env->file_end)
+			return (put_error(MALFORMED, env->exec, env->file_name));
+		i++;
+		lc = (void*)lc + endianness(lc->cmdsize, env->big_endian);
+	}
+	return (0);
+}
 
 int			is_sought_section(char *sec_name, char *seg_name, int option_data)
 {
@@ -63,10 +79,10 @@ int			handle_64(t_otool *env)
 	header = (struct mach_header_64*)env->file_start;
 	lc = (struct load_command*)(env->file_start + sizeof(*header));
 	header->ncmds = endianness(header->ncmds, env->big_endian);
+	if (check_load_command_overflow(env, lc, header->ncmds) == -1)
+		return (-1);
 	while (i < header->ncmds)
 	{
-		if ((void*)lc > env->file_end)
-			return (put_error(MALFORMED, env->exec, env->file_name));
 		if (endianness(lc->cmd, env->big_endian) == LC_SEGMENT_64)
 		{
 			if (browse_sections_64(env, lc) == -1)

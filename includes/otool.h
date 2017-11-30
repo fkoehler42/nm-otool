@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/23 14:45:58 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/11/29 19:02:53 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/11/30 14:49:00 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ int					set_section_32_endianness(t_otool *env,
 					struct section *sec);
 int					set_section_64_endianness(t_otool *env,
 					struct section_64 *sec);
+int					check_load_command_overflow(t_otool *env,
+					struct load_command *lc, uint32_t ncmds);
 
 int					is_sought_section(char *sec_name, char *seg_name,
 					int option_data);
