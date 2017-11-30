@@ -1,10 +1,12 @@
-# NM-OTOOL
+# Nm-Otool
 
 Nm and Otool are two UNIX executables which display informations about the content of a binary file.
 
 This implementation handles the most commons architectures (x86_64, i386, PowerPC...).
 
 ## Usage
+
+### ft_nm
 
 ```
 ./ft_nm [-pruUj] [file ...]
@@ -15,6 +17,8 @@ This implementation handles the most commons architectures (x86_64, i386, PowerP
 -U : don't display undefined symbols
 -j : display the symbol name only (no value or type)
 ```
+
+### ft_otool
 
 ```
 ./ft_otool [-d] [file ...]
